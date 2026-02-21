@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { 
     FaReact, FaPython, FaNode, FaMobile, FaRobot, FaSearch, 
-    FaChartLine, FaPalette, FaCube, FaDocker, FaGit
+    FaChartLine, FaPalette, FaCube, FaDocker, FaGit, FaDatabase
 } from 'react-icons/fa';
 import { SiVite, SiVercel } from 'react-icons/si';
 
