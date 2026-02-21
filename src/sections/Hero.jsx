@@ -443,10 +443,10 @@ export default function Hero() {
                 perspective: '1200px',
             }}>
                 <div className="hero-line" style={{
-                    fontFamily: "'Outfit', sans-serif",
+                    fontFamily: "'Space Mono', monospace",
                     fontSize: 'clamp(2.2rem, 5.5vw, 5rem)',
-                    fontWeight: 800,
-                    letterSpacing: '-0.03em',
+                    fontWeight: 700,
+                    letterSpacing: '-0.02em',
                     lineHeight: 1.05,
                     marginTop: '4px',
                     opacity: 0,
