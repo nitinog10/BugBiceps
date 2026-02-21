@@ -468,7 +468,7 @@ export default function Hero() {
                         WebkitTextFillColor: 'transparent',
                         filter: 'drop-shadow(0 0 40px rgba(240,176,32,0.25))',
                     }}>
-                        Systems That Scale
+                        We Flex Code Until Bugs Break
                     </span>
                 </div>
             </div>
