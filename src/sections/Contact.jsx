@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MagneticButton from '../components/MagneticButton';
@@ -7,10 +7,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Contact() {
     const sectionRef = useRef(null);
+    const [focusedField, setFocusedField] = useState(null);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.fromTo('.contact-item',
+            gsap.fromTo('.contact-reveal',
                 { y: 50, opacity: 0 },
                 {
                     y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'expo.out',
@@ -22,24 +23,40 @@ export default function Contact() {
         return () => ctx.revert();
     }, []);
 
-    const inputStyle = {
+    const inputBaseStyle = {
         width: '100%',
-        padding: '16px 0',
+        padding: '18px 0',
         background: 'transparent',
         border: 'none',
-        borderBottom: '1px solid rgba(232, 168, 32, 0.15)',
+        borderBottom: '1px solid rgba(240, 176, 32, 0.1)',
         color: 'var(--text-primary)',
         fontFamily: "'Plus Jakarta Sans', sans-serif",
         fontSize: '1rem',
         outline: 'none',
-        transition: 'border-color 0.3s ease',
+        transition: 'border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+        letterSpacing: '0.01em',
     };
 
-    const handleFocus = (e) => {
-        e.target.style.borderBottom = '1px solid var(--gold)';
+    const labelStyle = {
+        fontFamily: "'JetBrains Mono', monospace",
+        fontSize: '0.65rem',
+        color: 'var(--text-muted)',
+        letterSpacing: '0.15em',
+        textTransform: 'uppercase',
+        marginBottom: '8px',
+        display: 'block',
+        fontWeight: 500,
+        transition: 'color 0.3s ease',
     };
+
+    const handleFocus = (e, field) => {
+        e.target.style.borderBottom = '1px solid #F0B020';
+        setFocusedField(field);
+    };
+
     const handleBlur = (e) => {
-        e.target.style.borderBottom = '1px solid rgba(232, 168, 32, 0.15)';
+        e.target.style.borderBottom = '1px solid rgba(240, 176, 32, 0.1)';
+        setFocusedField(null);
     };
 
     return (
@@ -49,16 +66,20 @@ export default function Contact() {
             position: 'relative',
         }}>
             <div style={{
-                maxWidth: '700px',
+                maxWidth: '680px',
                 margin: '0 auto',
-                padding: '0 clamp(20px, 4vw, 60px)',
+                padding: '0 clamp(24px, 5vw, 80px)',
             }}>
-                <div className="contact-item" style={{ textAlign: 'center', marginBottom: '60px', opacity: 0 }}>
+                <div className="contact-reveal" style={{
+                    textAlign: 'center',
+                    marginBottom: '70px',
+                    opacity: 0,
+                }}>
                     <span style={{
-                        fontFamily: "'Plus Jakarta Sans', sans-serif",
-                        fontSize: '0.8rem',
+                        fontFamily: "'JetBrains Mono', monospace",
+                        fontSize: '0.7rem',
                         letterSpacing: '0.2em',
-                        color: 'var(--gold)',
+                        color: 'rgba(240,176,32,0.6)',
                         textTransform: 'uppercase',
                         fontWeight: 500,
                     }}>
@@ -66,99 +87,109 @@ export default function Contact() {
                     </span>
                     <h2 style={{
                         fontFamily: "'Outfit', sans-serif",
-                        fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-                        fontWeight: 700,
-                        marginTop: '12px',
-                        letterSpacing: '-0.02em',
+                        fontSize: 'clamp(2.2rem, 5vw, 3.8rem)',
+                        fontWeight: 800,
+                        marginTop: '14px',
+                        letterSpacing: '-0.03em',
                     }}>
                         Let's Build{' '}
                         <span style={{
-                            background: 'linear-gradient(135deg, #E8A820, #E85820)',
+                            background: 'linear-gradient(135deg, #F0B020, #F06020)',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
                         }}>Together</span>
                     </h2>
+                    <p style={{
+                        fontFamily: "'Plus Jakarta Sans', sans-serif",
+                        fontSize: '0.95rem',
+                        color: 'var(--text-secondary)',
+                        marginTop: '16px',
+                        lineHeight: 1.7,
+                    }}>
+                        Have a project in mind? Let's discuss how we can bring your vision to life.
+                    </p>
                 </div>
 
-                <form onSubmit={e => e.preventDefault()} style={{
+                <form id="contact-form" onSubmit={e => e.preventDefault()} style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '36px',
+                    gap: '40px',
                 }}>
-                    <div className="contact-item" style={{ opacity: 0 }}>
+                    <div className="contact-reveal" style={{ opacity: 0 }}>
                         <label style={{
-                            fontFamily: "'Plus Jakarta Sans', sans-serif",
-                            fontSize: '0.75rem',
-                            color: 'var(--text-muted)',
-                            letterSpacing: '0.1em',
-                            textTransform: 'uppercase',
-                            marginBottom: '8px',
-                            display: 'block',
+                            ...labelStyle,
+                            color: focusedField === 'name' ? '#F0B020' : 'var(--text-muted)',
                         }}>Name</label>
                         <input
+                            id="contact-name"
                             type="text"
                             placeholder="Your name"
-                            style={inputStyle}
-                            onFocus={handleFocus}
+                            style={inputBaseStyle}
+                            onFocus={(e) => handleFocus(e, 'name')}
                             onBlur={handleBlur}
                         />
                     </div>
 
-                    <div className="contact-item" style={{ opacity: 0 }}>
+                    <div className="contact-reveal" style={{ opacity: 0 }}>
                         <label style={{
-                            fontFamily: "'Plus Jakarta Sans', sans-serif",
-                            fontSize: '0.75rem',
-                            color: 'var(--text-muted)',
-                            letterSpacing: '0.1em',
-                            textTransform: 'uppercase',
-                            marginBottom: '8px',
-                            display: 'block',
+                            ...labelStyle,
+                            color: focusedField === 'email' ? '#F0B020' : 'var(--text-muted)',
                         }}>Email</label>
                         <input
+                            id="contact-email"
                             type="email"
                             placeholder="your@email.com"
-                            style={inputStyle}
-                            onFocus={handleFocus}
+                            style={inputBaseStyle}
+                            onFocus={(e) => handleFocus(e, 'email')}
                             onBlur={handleBlur}
                         />
                     </div>
 
-                    <div className="contact-item" style={{ opacity: 0 }}>
+                    <div className="contact-reveal" style={{ opacity: 0 }}>
                         <label style={{
-                            fontFamily: "'Plus Jakarta Sans', sans-serif",
-                            fontSize: '0.75rem',
-                            color: 'var(--text-muted)',
-                            letterSpacing: '0.1em',
-                            textTransform: 'uppercase',
-                            marginBottom: '8px',
-                            display: 'block',
+                            ...labelStyle,
+                            color: focusedField === 'project' ? '#F0B020' : 'var(--text-muted)',
                         }}>Project Details</label>
                         <textarea
+                            id="contact-message"
                             placeholder="Describe your project..."
                             rows={4}
                             style={{
-                                ...inputStyle,
+                                ...inputBaseStyle,
                                 resize: 'vertical',
                                 minHeight: '120px',
+                                lineHeight: 1.7,
                             }}
-                            onFocus={handleFocus}
+                            onFocus={(e) => handleFocus(e, 'project')}
                             onBlur={handleBlur}
                         />
                     </div>
 
-                    <div className="contact-item" style={{ opacity: 0, textAlign: 'center', marginTop: '12px' }}>
-                        <MagneticButton style={{
-                            padding: '16px 48px',
-                            background: 'linear-gradient(135deg, #E8A820, #E85820)',
-                            color: '#0A0A0F',
-                            fontFamily: "'Outfit', sans-serif",
-                            fontSize: '1rem',
-                            fontWeight: 600,
-                            borderRadius: '50px',
-                            letterSpacing: '0.02em',
-                            boxShadow: '0 0 40px rgba(232, 168, 32, 0.2)',
-                        }}>
-                            Send Message
+                    <div className="contact-reveal" style={{
+                        opacity: 0,
+                        textAlign: 'center',
+                        marginTop: '16px',
+                    }}>
+                        <MagneticButton
+                            id="contact-submit"
+                            style={{
+                                padding: '18px 56px',
+                                background: 'linear-gradient(135deg, #F0B020, #F06020)',
+                                color: '#060608',
+                                fontFamily: "'Outfit', sans-serif",
+                                fontSize: '0.95rem',
+                                fontWeight: 700,
+                                borderRadius: '50px',
+                                letterSpacing: '0.02em',
+                                boxShadow: '0 0 40px rgba(240, 176, 32, 0.15)',
+                                transition: 'box-shadow 0.4s ease',
+                                position: 'relative',
+                                overflow: 'hidden',
+                            }}
+                        >
+                            <span style={{ position: 'relative', zIndex: 1 }}>
+                                Send Message →
+                            </span>
                         </MagneticButton>
                     </div>
                 </form>

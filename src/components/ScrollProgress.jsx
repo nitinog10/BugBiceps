@@ -19,16 +19,16 @@ export default function ScrollProgress() {
             top: 0,
             left: 0,
             right: 0,
-            height: '3px',
+            height: '2px',
             zIndex: 9998,
             background: 'transparent',
         }}>
             <div style={{
                 height: '100%',
                 width: `${progress}%`,
-                background: 'linear-gradient(90deg, #D42B2B, #E8A820, #E85820)',
-                transition: 'width 0.1s linear',
-                boxShadow: '0 0 10px rgba(232, 168, 32, 0.5)',
+                background: 'linear-gradient(90deg, #E83030, #F0B020, #F06020)',
+                transition: 'width 0.08s linear',
+                boxShadow: '0 0 12px rgba(240, 176, 32, 0.4)',
             }} />
         </div>
     );

@@ -29,12 +29,16 @@ function App() {
     useEffect(() => {
         if (loading) return;
 
+        // Initialize Lenis smooth scroll — physics-based, buttery feel
         const lenis = new Lenis({
-            duration: 1.2,
+            duration: 1.4,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smoothWheel: true,
+            touchMultiplier: 2,
+            infinite: false,
         });
 
+        // Connect Lenis to GSAP ScrollTrigger
         lenis.on('scroll', ScrollTrigger.update);
 
         gsap.ticker.add((time) => {
@@ -42,8 +46,12 @@ function App() {
         });
         gsap.ticker.lagSmoothing(0);
 
+        // Expose lenis globally for smooth nav scrolling
+        window.__lenis = lenis;
+
         return () => {
             lenis.destroy();
+            window.__lenis = null;
         };
     }, [loading]);
 
@@ -56,64 +64,53 @@ function App() {
                     <ScrollProgress />
                     <Navbar />
 
+                    {/* Noise texture overlay */}
+                    <div className="noise-overlay" />
+
                     {/* Global ambient background */}
                     <div style={{
                         position: 'fixed',
                         inset: 0,
                         zIndex: -1,
-                        background: '#08080C',
+                        background: 'var(--bg-primary)',
                         pointerEvents: 'none',
                     }}>
-                        {/* Persistent ambient gradient blobs */}
                         <div style={{
                             position: 'absolute',
-                            top: '10%',
-                            left: '5%',
-                            width: '40vw',
-                            height: '40vw',
-                            maxWidth: '500px',
-                            maxHeight: '500px',
-                            borderRadius: '50%',
-                            background: 'radial-gradient(circle, rgba(240,176,32,0.06) 0%, transparent 60%)',
-                            filter: 'blur(100px)',
-                            animation: 'pulse-glow 12s ease-in-out infinite',
-                        }} />
-                        <div style={{
-                            position: 'absolute',
-                            bottom: '20%',
-                            right: '10%',
+                            top: '8%',
+                            left: '3%',
                             width: '35vw',
                             height: '35vw',
                             maxWidth: '450px',
                             maxHeight: '450px',
                             borderRadius: '50%',
-                            background: 'radial-gradient(circle, rgba(232,48,48,0.04) 0%, transparent 60%)',
+                            background: 'radial-gradient(circle, rgba(240,176,32,0.04) 0%, transparent 60%)',
                             filter: 'blur(100px)',
-                            animation: 'pulse-glow 15s ease-in-out infinite',
-                            animationDelay: '5s',
+                            animation: 'pulse-glow 14s ease-in-out infinite',
+                        }} />
+                        <div style={{
+                            position: 'absolute',
+                            bottom: '15%',
+                            right: '8%',
+                            width: '30vw',
+                            height: '30vw',
+                            maxWidth: '400px',
+                            maxHeight: '400px',
+                            borderRadius: '50%',
+                            background: 'radial-gradient(circle, rgba(232,48,48,0.03) 0%, transparent 60%)',
+                            filter: 'blur(100px)',
+                            animation: 'pulse-glow 18s ease-in-out infinite',
+                            animationDelay: '6s',
                         }} />
                     </div>
 
                     <main>
                         <Hero />
-                        {/* Section divider */}
-                        <div style={{
-                            width: '100%',
-                            height: '1px',
-                            background: 'linear-gradient(90deg, transparent, rgba(240,176,32,0.15), transparent)',
-                        }} />
+                        <div className="section-divider" />
                         <Services />
-                        <div style={{
-                            width: '100%',
-                            height: '1px',
-                            background: 'linear-gradient(90deg, transparent, rgba(240,176,32,0.15), transparent)',
-                        }} />
+                        <div className="section-divider" />
                         <AIShowcase />
-                        <div style={{
-                            width: '100%',
-                            height: '1px',
-                            background: 'linear-gradient(90deg, transparent, rgba(240,176,32,0.15), transparent)',
-                        }} />
+                        <div className="section-divider" />
                         <CaseStudies />
                         <Philosophy />
                         <Stats />

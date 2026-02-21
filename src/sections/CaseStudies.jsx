@@ -8,20 +8,23 @@ const projects = [
     {
         title: 'Neural Commerce Engine',
         category: 'AI · E-Commerce',
-        desc: 'AI-powered recommendation system processing 2M+ queries daily with sub-100ms latency.',
-        gradient: 'linear-gradient(135deg, rgba(232,168,32,0.15), rgba(232,88,32,0.08))',
+        desc: 'AI-powered recommendation system processing 2M+ queries daily with sub-100ms latency. Built with custom embeddings and real-time inference pipeline.',
+        tech: ['PyTorch', 'FastAPI', 'Redis', 'React'],
+        metric: '2M+ queries/day',
     },
     {
         title: 'FinBot Pro',
         category: 'LLM · Finance',
-        desc: 'Fine-tuned financial advisor chatbot with RAG pipeline and real-time market analysis.',
-        gradient: 'linear-gradient(135deg, rgba(212,43,43,0.15), rgba(232,168,32,0.08))',
+        desc: 'Fine-tuned financial advisor chatbot with RAG pipeline, real-time market analysis, and multi-modal document processing.',
+        tech: ['LangChain', 'GPT-4', 'Pinecone', 'Next.js'],
+        metric: '95% accuracy',
     },
     {
         title: 'AutoScale Platform',
         category: 'Automation · SaaS',
-        desc: 'End-to-end business automation platform reducing manual workflows by 94%.',
-        gradient: 'linear-gradient(135deg, rgba(232,88,32,0.15), rgba(212,43,43,0.08))',
+        desc: 'End-to-end business automation platform reducing manual workflows by 94%. Handles 50K+ daily task orchestrations.',
+        tech: ['Node.js', 'Temporal', 'PostgreSQL', 'Vue'],
+        metric: '94% reduction',
     },
 ];
 
@@ -58,26 +61,27 @@ export default function CaseStudies() {
             <div style={{
                 maxWidth: 'var(--container-max)',
                 margin: '0 auto',
-                padding: '0 clamp(20px, 4vw, 60px)',
+                padding: '0 clamp(24px, 5vw, 80px)',
             }}>
-                <div className="case-heading" style={{ marginBottom: '60px', opacity: 0 }}>
+                <div className="case-heading" style={{ marginBottom: '70px', opacity: 0 }}>
                     <span style={{
-                        fontFamily: "'Plus Jakarta Sans', sans-serif",
-                        fontSize: '0.8rem',
+                        fontFamily: "'JetBrains Mono', monospace",
+                        fontSize: '0.7rem',
                         letterSpacing: '0.2em',
-                        color: 'var(--gold)',
+                        color: 'rgba(240,176,32,0.6)',
                         textTransform: 'uppercase',
                         fontWeight: 500,
                     }}>Selected Work</span>
                     <h2 style={{
                         fontFamily: "'Outfit', sans-serif",
-                        fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-                        fontWeight: 700,
-                        marginTop: '12px',
-                        letterSpacing: '-0.02em',
+                        fontSize: 'clamp(2.2rem, 5vw, 3.8rem)',
+                        fontWeight: 800,
+                        marginTop: '14px',
+                        letterSpacing: '-0.03em',
                     }}>
-                        Case <span style={{
-                            background: 'linear-gradient(135deg, #E8A820, #E85820)',
+                        Case{' '}
+                        <span style={{
+                            background: 'linear-gradient(135deg, #F0B020, #F06020)',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
                         }}>Studies</span>
@@ -87,59 +91,109 @@ export default function CaseStudies() {
                 <div style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '24px',
+                    gap: '20px',
                 }}>
                     {projects.map((project, i) => (
                         <div key={project.title} className="case-card" data-cursor-hover style={{
                             position: 'relative',
-                            padding: 'clamp(40px, 5vw, 60px)',
-                            background: project.gradient,
-                            border: '1px solid rgba(232, 168, 32, 0.06)',
-                            borderRadius: '24px',
+                            padding: 'clamp(40px, 5vw, 64px)',
+                            background: 'rgba(12, 12, 20, 0.6)',
+                            border: '1px solid rgba(240, 176, 32, 0.06)',
+                            borderRadius: '20px',
                             overflow: 'hidden',
                             opacity: 0,
-                            transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease',
+                            transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease',
                         }}
                             onMouseEnter={e => {
-                                e.currentTarget.style.borderColor = 'rgba(232, 168, 32, 0.2)';
+                                e.currentTarget.style.borderColor = 'rgba(240, 176, 32, 0.15)';
                                 e.currentTarget.style.transform = 'scale(1.01)';
+                                e.currentTarget.style.boxShadow = '0 8px 50px rgba(240,176,32,0.06)';
                             }}
                             onMouseLeave={e => {
-                                e.currentTarget.style.borderColor = 'rgba(232, 168, 32, 0.06)';
+                                e.currentTarget.style.borderColor = 'rgba(240, 176, 32, 0.06)';
                                 e.currentTarget.style.transform = 'scale(1)';
+                                e.currentTarget.style.boxShadow = 'none';
                             }}
                         >
+                            {/* Top accent */}
+                            <div style={{
+                                position: 'absolute',
+                                top: 0,
+                                left: '64px',
+                                right: '64px',
+                                height: '1px',
+                                background: 'linear-gradient(90deg, transparent, rgba(240,176,32,0.15), transparent)',
+                            }} />
+
                             <div style={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 alignItems: 'flex-start',
                                 flexWrap: 'wrap',
-                                gap: '20px',
+                                gap: '24px',
                             }}>
                                 <div style={{ flex: 1, minWidth: '280px' }}>
-                                    <span style={{
-                                        fontFamily: "'Plus Jakarta Sans', sans-serif",
-                                        fontSize: '0.75rem',
-                                        letterSpacing: '0.15em',
-                                        color: 'var(--gold)',
-                                        textTransform: 'uppercase',
-                                        fontWeight: 500,
-                                    }}>{project.category}</span>
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '16px',
+                                        marginBottom: '16px',
+                                    }}>
+                                        <span style={{
+                                            fontFamily: "'JetBrains Mono', monospace",
+                                            fontSize: '0.6rem',
+                                            letterSpacing: '0.15em',
+                                            color: 'rgba(240,176,32,0.6)',
+                                            textTransform: 'uppercase',
+                                            fontWeight: 500,
+                                        }}>{project.category}</span>
+                                        <span style={{
+                                            fontFamily: "'JetBrains Mono', monospace",
+                                            fontSize: '0.6rem',
+                                            padding: '3px 10px',
+                                            borderRadius: '50px',
+                                            background: 'rgba(240,176,32,0.08)',
+                                            border: '1px solid rgba(240,176,32,0.12)',
+                                            color: '#F0B020',
+                                            fontWeight: 500,
+                                        }}>{project.metric}</span>
+                                    </div>
                                     <h3 style={{
                                         fontFamily: "'Outfit', sans-serif",
                                         fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
-                                        fontWeight: 700,
-                                        marginTop: '12px',
-                                        letterSpacing: '-0.02em',
+                                        fontWeight: 800,
+                                        letterSpacing: '-0.03em',
                                     }}>{project.title}</h3>
                                     <p style={{
                                         fontFamily: "'Plus Jakarta Sans', sans-serif",
-                                        fontSize: '1rem',
+                                        fontSize: '0.95rem',
                                         color: 'var(--text-secondary)',
                                         marginTop: '16px',
-                                        lineHeight: 1.6,
-                                        maxWidth: '500px',
+                                        lineHeight: 1.7,
+                                        maxWidth: '520px',
                                     }}>{project.desc}</p>
+
+                                    {/* Tech stack */}
+                                    <div style={{
+                                        display: 'flex',
+                                        gap: '8px',
+                                        marginTop: '24px',
+                                        flexWrap: 'wrap',
+                                    }}>
+                                        {project.tech.map(t => (
+                                            <span key={t} style={{
+                                                fontFamily: "'JetBrains Mono', monospace",
+                                                fontSize: '0.58rem',
+                                                letterSpacing: '0.05em',
+                                                padding: '4px 12px',
+                                                borderRadius: '50px',
+                                                border: '1px solid rgba(240,176,32,0.08)',
+                                                color: 'var(--text-muted)',
+                                            }}>
+                                                {t}
+                                            </span>
+                                        ))}
+                                    </div>
                                 </div>
                                 <div style={{
                                     display: 'flex',
@@ -147,23 +201,27 @@ export default function CaseStudies() {
                                     gap: '8px',
                                     color: 'var(--gold)',
                                     fontFamily: "'Plus Jakarta Sans', sans-serif",
-                                    fontSize: '0.9rem',
+                                    fontSize: '0.85rem',
                                     fontWeight: 500,
                                     alignSelf: 'flex-end',
-                                }}>
-                                    View Project <span style={{ fontSize: '1.2rem' }}>→</span>
+                                    transition: 'gap 0.3s ease',
+                                }}
+                                    onMouseEnter={e => e.currentTarget.style.gap = '14px'}
+                                    onMouseLeave={e => e.currentTarget.style.gap = '8px'}
+                                >
+                                    View Project <span style={{ fontSize: '1.1rem' }}>→</span>
                                 </div>
                             </div>
 
-                            {/* Large number in background */}
+                            {/* Large background number */}
                             <span style={{
                                 position: 'absolute',
-                                top: '-20px',
+                                top: '-30px',
                                 right: '40px',
                                 fontFamily: "'Outfit', sans-serif",
-                                fontSize: 'clamp(6rem, 12vw, 12rem)',
-                                fontWeight: 700,
-                                color: 'rgba(232, 168, 32, 0.03)',
+                                fontSize: 'clamp(7rem, 14vw, 14rem)',
+                                fontWeight: 900,
+                                color: 'rgba(240, 176, 32, 0.02)',
                                 lineHeight: 1,
                                 pointerEvents: 'none',
                             }}>

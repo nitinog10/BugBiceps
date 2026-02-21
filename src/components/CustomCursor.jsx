@@ -9,9 +9,10 @@ export default function CustomCursor() {
         const follower = followerRef.current;
         if (!cursor || !follower) return;
 
-        let mouseX = 0, mouseY = 0;
-        let cursorX = 0, cursorY = 0;
-        let followerX = 0, followerY = 0;
+        let mouseX = -100, mouseY = -100;
+        let cursorX = -100, cursorY = -100;
+        let followerX = -100, followerY = -100;
+        let isHovering = false;
 
         const onMouseMove = (e) => {
             mouseX = e.clientX;
@@ -19,24 +20,28 @@ export default function CustomCursor() {
         };
 
         const onMouseEnterInteractive = () => {
-            cursor.style.transform = 'translate(-50%, -50%) scale(2.5)';
-            cursor.style.background = 'rgba(232, 168, 32, 0.1)';
-            cursor.style.border = '1px solid rgba(232, 168, 32, 0.5)';
-            follower.style.opacity = '0';
+            isHovering = true;
+            cursor.style.transform = 'translate(-50%, -50%) scale(0)';
+            follower.style.width = '50px';
+            follower.style.height = '50px';
+            follower.style.borderColor = 'rgba(240, 176, 32, 0.5)';
+            follower.style.background = 'rgba(240, 176, 32, 0.05)';
         };
 
         const onMouseLeaveInteractive = () => {
+            isHovering = false;
             cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-            cursor.style.background = 'rgba(232, 168, 32, 0.8)';
-            cursor.style.border = 'none';
-            follower.style.opacity = '1';
+            follower.style.width = '32px';
+            follower.style.height = '32px';
+            follower.style.borderColor = 'rgba(240, 176, 32, 0.2)';
+            follower.style.background = 'transparent';
         };
 
         const animate = () => {
-            cursorX += (mouseX - cursorX) * 0.2;
-            cursorY += (mouseY - cursorY) * 0.2;
-            followerX += (mouseX - followerX) * 0.08;
-            followerY += (mouseY - followerY) * 0.08;
+            cursorX += (mouseX - cursorX) * 0.25;
+            cursorY += (mouseY - cursorY) * 0.25;
+            followerX += (mouseX - followerX) * 0.1;
+            followerY += (mouseY - followerY) * 0.1;
 
             cursor.style.left = cursorX + 'px';
             cursor.style.top = cursorY + 'px';
@@ -49,22 +54,18 @@ export default function CustomCursor() {
         document.addEventListener('mousemove', onMouseMove);
         animate();
 
-        const interactiveEls = document.querySelectorAll('a, button, input, textarea, [data-cursor-hover]');
-        interactiveEls.forEach(el => {
-            el.addEventListener('mouseenter', onMouseEnterInteractive);
-            el.addEventListener('mouseleave', onMouseLeaveInteractive);
-        });
-
-        // Re-attach on DOM changes
-        const observer = new MutationObserver(() => {
-            const newEls = document.querySelectorAll('a, button, input, textarea, [data-cursor-hover]');
-            newEls.forEach(el => {
+        const attachListeners = () => {
+            const interactiveEls = document.querySelectorAll('a, button, input, textarea, [data-cursor-hover]');
+            interactiveEls.forEach(el => {
                 el.removeEventListener('mouseenter', onMouseEnterInteractive);
                 el.removeEventListener('mouseleave', onMouseLeaveInteractive);
                 el.addEventListener('mouseenter', onMouseEnterInteractive);
                 el.addEventListener('mouseleave', onMouseLeaveInteractive);
             });
-        });
+        };
+
+        attachListeners();
+        const observer = new MutationObserver(attachListeners);
         observer.observe(document.body, { childList: true, subtree: true });
 
         return () => {
@@ -73,32 +74,31 @@ export default function CustomCursor() {
         };
     }, []);
 
-    // Hide on mobile
     if (typeof window !== 'undefined' && window.innerWidth < 768) return null;
 
     return (
         <>
             <div ref={cursorRef} style={{
                 position: 'fixed',
-                width: '10px',
-                height: '10px',
-                background: 'rgba(232, 168, 32, 0.8)',
+                width: '6px',
+                height: '6px',
+                background: '#F0B020',
                 borderRadius: '50%',
                 pointerEvents: 'none',
                 zIndex: 99999,
                 transform: 'translate(-50%, -50%)',
-                transition: 'transform 0.2s ease, background 0.2s ease, border 0.2s ease',
-                mixBlendMode: 'difference',
+                transition: 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
             }} />
             <div ref={followerRef} style={{
                 position: 'fixed',
-                width: '35px',
-                height: '35px',
-                border: '1px solid rgba(232, 168, 32, 0.3)',
+                width: '32px',
+                height: '32px',
+                border: '1px solid rgba(240, 176, 32, 0.2)',
                 borderRadius: '50%',
                 pointerEvents: 'none',
                 zIndex: 99998,
                 transform: 'translate(-50%, -50%)',
+                transition: 'width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, background 0.3s ease',
             }} />
         </>
     );

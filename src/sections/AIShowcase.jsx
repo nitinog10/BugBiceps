@@ -21,16 +21,19 @@ export default function AIShowcase() {
         resize();
         window.addEventListener('resize', resize);
 
-        const nodes = Array.from({ length: 40 }, () => ({
+        const nodes = Array.from({ length: 50 }, () => ({
             x: Math.random() * canvas.offsetWidth,
             y: Math.random() * canvas.offsetHeight,
-            vx: (Math.random() - 0.5) * 0.5,
-            vy: (Math.random() - 0.5) * 0.5,
-            radius: Math.random() * 3 + 2,
+            vx: (Math.random() - 0.5) * 0.4,
+            vy: (Math.random() - 0.5) * 0.4,
+            radius: Math.random() * 2.5 + 1.5,
+            pulsePhase: Math.random() * Math.PI * 2,
         }));
 
         let animId;
+        let time = 0;
         const draw = () => {
+            time += 0.01;
             ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
 
             for (let i = 0; i < nodes.length; i++) {
@@ -38,10 +41,10 @@ export default function AIShowcase() {
                     const dx = nodes[j].x - nodes[i].x;
                     const dy = nodes[j].y - nodes[i].y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 200) {
-                        const alpha = (1 - dist / 200) * 0.25;
+                    if (dist < 180) {
+                        const alpha = (1 - dist / 180) * 0.2;
                         ctx.strokeStyle = `rgba(240, 176, 32, ${alpha})`;
-                        ctx.lineWidth = 0.8;
+                        ctx.lineWidth = 0.6;
                         ctx.beginPath();
                         ctx.moveTo(nodes[i].x, nodes[i].y);
                         ctx.lineTo(nodes[j].x, nodes[j].y);
@@ -56,14 +59,17 @@ export default function AIShowcase() {
                 if (n.x < 0 || n.x > canvas.offsetWidth) n.vx *= -1;
                 if (n.y < 0 || n.y > canvas.offsetHeight) n.vy *= -1;
 
+                const pulse = Math.sin(time * 2 + n.pulsePhase) * 0.5 + 0.5;
+                const r = n.radius * (0.8 + pulse * 0.4);
+
                 ctx.beginPath();
-                ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(240, 176, 32, 0.8)';
+                ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(240, 176, 32, ${0.5 + pulse * 0.3})`;
                 ctx.fill();
 
                 ctx.beginPath();
-                ctx.arc(n.x, n.y, n.radius + 6, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(240, 176, 32, 0.12)';
+                ctx.arc(n.x, n.y, r + 6, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(240, 176, 32, ${0.04 + pulse * 0.04})`;
                 ctx.fill();
             });
 
@@ -72,13 +78,13 @@ export default function AIShowcase() {
         draw();
 
         const gsapCtx = gsap.context(() => {
-            gsap.fromTo('.ai-text-item',
+            gsap.fromTo('.ai-reveal',
                 { y: 60, opacity: 0 },
                 {
-                    y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: 'expo.out',
+                    y: 0, opacity: 1, duration: 0.8, stagger: 0.12, ease: 'expo.out',
                     scrollTrigger: {
                         trigger: sectionRef.current,
-                        start: 'top 60%',
+                        start: 'top 65%',
                     }
                 }
             );
@@ -90,6 +96,13 @@ export default function AIShowcase() {
             gsapCtx.revert();
         };
     }, []);
+
+    const capabilities = [
+        { label: 'LLM Fine-Tuning', value: 'Custom Models', detail: 'GPT, LLaMA, Mistral' },
+        { label: 'RAG Systems', value: 'Production-Grade', detail: 'Vector DB + Embeddings' },
+        { label: 'AI Chatbots', value: 'Multi-Platform', detail: 'Web, Slack, WhatsApp' },
+        { label: 'Automation', value: 'End-to-End', detail: 'No-code → Pro-code' },
+    ];
 
     return (
         <section ref={sectionRef} style={{
@@ -107,37 +120,39 @@ export default function AIShowcase() {
                 height: '100%',
             }} />
 
-            <div className="section-container" style={{
+            <div style={{
                 position: 'relative',
                 zIndex: 2,
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
                 gap: '80px',
                 alignItems: 'center',
-                padding: 'var(--section-pad) clamp(20px, 4vw, 60px)',
+                padding: 'var(--section-pad) clamp(24px, 5vw, 80px)',
                 maxWidth: 'var(--container-max)',
                 margin: '0 auto',
                 width: '100%',
-            }}>
+            }} className="ai-grid">
                 <div>
-                    <span className="ai-text-item" style={{
+                    <span className="ai-reveal" style={{
                         display: 'block',
-                        fontFamily: "'Plus Jakarta Sans', sans-serif",
-                        fontSize: '0.8rem',
+                        fontFamily: "'JetBrains Mono', monospace",
+                        fontSize: '0.7rem',
                         letterSpacing: '0.2em',
-                        color: 'var(--gold)',
+                        color: 'rgba(240,176,32,0.6)',
                         textTransform: 'uppercase',
                         fontWeight: 500,
                         marginBottom: '16px',
+                        opacity: 0,
                     }}>
                         AI Engineering
                     </span>
-                    <h2 className="ai-text-item" style={{
+                    <h2 className="ai-reveal" style={{
                         fontFamily: "'Outfit', sans-serif",
-                        fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-                        fontWeight: 700,
-                        lineHeight: 1.1,
-                        letterSpacing: '-0.02em',
+                        fontSize: 'clamp(2.2rem, 5vw, 3.8rem)',
+                        fontWeight: 800,
+                        lineHeight: 1.05,
+                        letterSpacing: '-0.03em',
+                        opacity: 0,
                     }}>
                         Building the{' '}
                         <span style={{
@@ -145,76 +160,106 @@ export default function AIShowcase() {
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
                         }}>Future</span>
-                        {' '}with AI
+                        <br />with AI
                     </h2>
-                    <p className="ai-text-item" style={{
+                    <p className="ai-reveal" style={{
                         fontFamily: "'Plus Jakarta Sans', sans-serif",
-                        fontSize: '1.05rem',
+                        fontSize: '1rem',
                         color: 'var(--text-secondary)',
                         marginTop: '24px',
-                        lineHeight: 1.7,
-                        maxWidth: '500px',
+                        lineHeight: 1.8,
+                        maxWidth: '480px',
+                        opacity: 0,
                     }}>
                         From custom LLMs to production-grade RAG systems, we engineer AI solutions
                         that don't just work — they dominate. Every system is built for performance,
                         accuracy, and scale.
                     </p>
+
+                    {/* Tech badges */}
+                    <div className="ai-reveal" style={{
+                        marginTop: '32px',
+                        display: 'flex',
+                        gap: '8px',
+                        flexWrap: 'wrap',
+                        opacity: 0,
+                    }}>
+                        {['PyTorch', 'LangChain', 'Pinecone', 'OpenAI', 'HuggingFace'].map(tech => (
+                            <span key={tech} style={{
+                                fontFamily: "'JetBrains Mono', monospace",
+                                fontSize: '0.6rem',
+                                letterSpacing: '0.08em',
+                                padding: '5px 14px',
+                                borderRadius: '50px',
+                                border: '1px solid rgba(240,176,32,0.1)',
+                                background: 'rgba(240,176,32,0.04)',
+                                color: 'var(--text-muted)',
+                            }}>
+                                {tech}
+                            </span>
+                        ))}
+                    </div>
                 </div>
 
                 <div style={{
                     display: 'grid',
                     gridTemplateColumns: '1fr 1fr',
-                    gap: '20px',
+                    gap: '16px',
                 }}>
-                    {[
-                        { label: 'LLM Fine-Tuning', value: 'Custom Models' },
-                        { label: 'RAG Systems', value: 'Production-Grade' },
-                        { label: 'AI Chatbots', value: 'Multi-Platform' },
-                        { label: 'Automation', value: 'End-to-End' },
-                    ].map((item) => (
-                        <div key={item.label} className="ai-text-item" style={{
+                    {capabilities.map((item) => (
+                        <div key={item.label} className="ai-reveal" style={{
                             padding: '28px 24px',
-                            background: 'linear-gradient(145deg, rgba(20,20,32,0.85), rgba(14,14,22,0.9))',
+                            background: 'rgba(12, 12, 20, 0.8)',
                             backdropFilter: 'blur(12px)',
-                            border: '1px solid rgba(240, 176, 32, 0.15)',
-                            borderRadius: '16px',
-                            boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
-                            transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
+                            border: '1px solid rgba(240, 176, 32, 0.08)',
+                            borderRadius: '14px',
+                            transition: 'border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                            opacity: 0,
+                            cursor: 'none',
                         }}
                             onMouseEnter={e => {
-                                e.currentTarget.style.borderColor = 'rgba(240, 176, 32, 0.35)';
-                                e.currentTarget.style.boxShadow = '0 4px 30px rgba(240,176,32,0.1)';
+                                e.currentTarget.style.borderColor = 'rgba(240, 176, 32, 0.25)';
+                                e.currentTarget.style.boxShadow = '0 4px 30px rgba(240,176,32,0.08)';
+                                e.currentTarget.style.transform = 'translateY(-4px)';
                             }}
                             onMouseLeave={e => {
-                                e.currentTarget.style.borderColor = 'rgba(240, 176, 32, 0.15)';
-                                e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
+                                e.currentTarget.style.borderColor = 'rgba(240, 176, 32, 0.08)';
+                                e.currentTarget.style.boxShadow = 'none';
+                                e.currentTarget.style.transform = 'translateY(0)';
                             }}
                         >
                             <p style={{
-                                fontFamily: "'Plus Jakarta Sans', sans-serif",
-                                fontSize: '0.75rem',
-                                color: 'var(--gold)',
-                                letterSpacing: '0.1em',
+                                fontFamily: "'JetBrains Mono', monospace",
+                                fontSize: '0.6rem',
+                                color: 'rgba(240,176,32,0.6)',
+                                letterSpacing: '0.12em',
                                 textTransform: 'uppercase',
                                 fontWeight: 500,
                             }}>{item.label}</p>
                             <p style={{
                                 fontFamily: "'Outfit', sans-serif",
-                                fontSize: '1.1rem',
-                                fontWeight: 600,
+                                fontSize: '1.15rem',
+                                fontWeight: 700,
                                 color: 'var(--text-primary)',
                                 marginTop: '8px',
+                                letterSpacing: '-0.01em',
                             }}>{item.value}</p>
+                            <p style={{
+                                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                                fontSize: '0.75rem',
+                                color: 'var(--text-muted)',
+                                marginTop: '6px',
+                            }}>{item.detail}</p>
                         </div>
                     ))}
                 </div>
             </div>
 
             <style>{`
-        @media (max-width: 768px) {
-          .section-container { grid-template-columns: 1fr !important; gap: 40px !important; }
-        }
-      `}</style>
+                @media (max-width: 768px) {
+                    .ai-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+                }
+            `}</style>
         </section>
     );
 }
