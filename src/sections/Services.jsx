@@ -61,23 +61,23 @@ export default function Services() {
     useEffect(() => {
         const ctx = gsap.context(() => {
 
-            // ── Heading entrance ──
-            gsap.fromTo(headingRef.current,
-                { y: 40, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 1,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: headingRef.current,
-                        start: 'top 85%',
-                    },
-                }
-            );
+            // ── Heading: scrub-linked so it reverses on scroll back ──
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: headingRef.current,
+                    start: 'top 88%',
+                    end: 'top 55%',
+                    scrub: 0.6,
+                },
+            })
+                .fromTo(headingRef.current,
+                    { y: 40, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 1, ease: 'none' }
+                );
 
-            // ── Each card enters individually on scroll ──
-            // Alternating slant: odd = from left, even = from right
+            // ── Each card: individual timeline with scrub ──
+            // scrub ties animation progress to scroll position
+            // scroll down = plays in, scroll up = reverses out
             cardsRef.current.forEach((card, i) => {
                 if (!card) return;
 
@@ -85,49 +85,50 @@ export default function Services() {
                 const xOffset = isEven ? -80 : 80;
                 const rotation = isEven ? -3 : 3;
 
-                gsap.fromTo(card,
+                // Card entrance timeline
+                const cardTl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 92%',
+                        end: 'top 55%',
+                        scrub: 0.8,
+                    },
+                });
+
+                cardTl.fromTo(card,
                     {
                         x: xOffset,
                         y: 50,
                         opacity: 0,
                         rotate: rotation,
                         scale: 0.92,
-                        filter: 'blur(3px)',
                     },
                     {
-                        x: isEven ? -20 : 20,       // Final resting slant offset
+                        x: isEven ? -20 : 20,
                         y: 0,
                         opacity: 1,
-                        rotate: isEven ? -1.5 : 1.5, // Subtle resting slant
+                        rotate: isEven ? -1.5 : 1.5,
                         scale: 1,
-                        filter: 'blur(0px)',
                         duration: 1,
-                        ease: 'power3.out',
-                        scrollTrigger: {
-                            trigger: card,
-                            start: 'top 88%',
-                            end: 'top 50%',
-                            toggleActions: 'play none none none',
-                        },
+                        ease: 'none',
                     }
                 );
 
-                // Activation glow line
+                // Activation glow line — slightly delayed within same scroll range
                 const line = glowLinesRef.current[i];
                 if (line) {
-                    gsap.fromTo(line,
+                    const lineTl = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: card,
+                            start: 'top 85%',
+                            end: 'top 50%',
+                            scrub: 0.8,
+                        },
+                    });
+
+                    lineTl.fromTo(line,
                         { scaleX: 0, opacity: 0 },
-                        {
-                            scaleX: 1,
-                            opacity: 1,
-                            duration: 0.7,
-                            ease: 'power3.out',
-                            scrollTrigger: {
-                                trigger: card,
-                                start: 'top 85%',
-                            },
-                            delay: 0.35,
-                        }
+                        { scaleX: 1, opacity: 1, duration: 1, ease: 'none' }
                     );
                 }
             });
