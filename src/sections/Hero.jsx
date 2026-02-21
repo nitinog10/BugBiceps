@@ -26,13 +26,12 @@ function SpotlightLogo() {
 
     useEffect(() => {
         const container = containerRef.current;
-        const bright = brightRef.current;
+        const brightMask = brightRef.current;
         const glow = glowRef.current;
-        if (!container || !bright || !glow) return;
+        if (!container || !brightMask || !glow) return;
 
-        const LERP_SPEED = 0.08;       // Smooth lag — lower = smoother
+        const LERP_SPEED = 0.16;       // Snappier tracking
         const SPOTLIGHT_RADIUS = 280;   // px — soft circle radius
-        const PARALLAX_STRENGTH = 15;   // px — logo parallax shift
         const GLOW_SIZE = 350;          // px — outer glow ring
 
         const handleMouseMove = (e) => {
@@ -59,12 +58,6 @@ function SpotlightLogo() {
             lerped.current.x += (mouse.current.x - lerped.current.x) * LERP_SPEED;
             lerped.current.y += (mouse.current.y - lerped.current.y) * LERP_SPEED;
 
-            // Calculate velocity for optional effects
-            velocity.current.x = lerped.current.x - prevLerped.current.x;
-            velocity.current.y = lerped.current.y - prevLerped.current.y;
-            prevLerped.current.x = lerped.current.x;
-            prevLerped.current.y = lerped.current.y;
-
             // Smooth spotlight opacity transition
             const targetOpacity = isInside.current ? 1 : 0;
             spotlightOpacity.current += (targetOpacity - spotlightOpacity.current) * 0.06;
@@ -74,25 +67,14 @@ function SpotlightLogo() {
             const px = lerped.current.x * rect.width;
             const py = lerped.current.y * rect.height;
 
-            // Calculate velocity-based spotlight scaling (subtle distortion)
-            const speed = Math.sqrt(velocity.current.x ** 2 + velocity.current.y ** 2);
-            const dynamicRadius = SPOTLIGHT_RADIUS + Math.min(speed * 2000, 80);
-
             // Update bright logo mask — radial gradient following cursor
-            bright.style.maskImage = `radial-gradient(circle ${dynamicRadius}px at ${px}px ${py}px, rgba(0,0,0,${spotlightOpacity.current}) 0%, rgba(0,0,0,${spotlightOpacity.current * 0.5}) 40%, transparent 70%)`;
-            bright.style.webkitMaskImage = bright.style.maskImage;
+            brightMask.style.maskImage = `radial-gradient(circle ${SPOTLIGHT_RADIUS}px at ${px}px ${py}px, rgba(0,0,0,${spotlightOpacity.current}) 0%, rgba(0,0,0,${spotlightOpacity.current * 0.4}) 50%, transparent 80%)`;
+            brightMask.style.webkitMaskImage = brightMask.style.maskImage;
 
             // Update glow element
             glow.style.left = `${px}px`;
             glow.style.top = `${py}px`;
-            glow.style.width = `${GLOW_SIZE + speed * 3000}px`;
-            glow.style.height = `${GLOW_SIZE + speed * 3000}px`;
             glow.style.opacity = spotlightOpacity.current * 0.55;
-
-            // Parallax shift on base logo
-            const offsetX = (lerped.current.x - 0.5) * PARALLAX_STRENGTH;
-            const offsetY = (lerped.current.y - 0.5) * PARALLAX_STRENGTH;
-            container.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
 
             animId = requestAnimationFrame(animate);
         };
@@ -120,11 +102,9 @@ function SpotlightLogo() {
                 justifyContent: 'center',
                 zIndex: 1,
                 pointerEvents: 'auto',
-                willChange: 'transform',
-                transition: 'transform 0.1s linear',
             }}
         >
-            {/* Layer 1 — Base muted logo (always visible, very dim) */}
+            {/* Layer 1 — Base muted logo (always visible, ultra dim) */}
             <img
                 src="/logo.png"
                 alt=""
@@ -133,32 +113,38 @@ function SpotlightLogo() {
                     position: 'absolute',
                     width: logoSize,
                     height: 'auto',
-                    opacity: 0.04,
-                    filter: 'grayscale(80%) brightness(0.6)',
+                    opacity: 0.02,
+                    filter: 'grayscale(100%) brightness(0.4)',
                     pointerEvents: 'none',
                     userSelect: 'none',
                 }}
             />
 
-            {/* Layer 2 — Bright logo (masked by spotlight) */}
-            <img
+            {/* Layer 2 — Revealed Logo Container (Masked) */}
+            <div
                 ref={brightRef}
-                src="/logo.png"
-                alt=""
-                draggable={false}
                 style={{
                     position: 'absolute',
-                    width: logoSize,
-                    height: 'auto',
-                    opacity: 0.35,
-                    filter: 'brightness(1.1) saturate(1.2)',
+                    inset: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                     pointerEvents: 'none',
-                    userSelect: 'none',
-                    maskImage: 'radial-gradient(circle 280px at 50% 50%, transparent 0%, transparent 100%)',
-                    WebkitMaskImage: 'radial-gradient(circle 280px at 50% 50%, transparent 0%, transparent 100%)',
                     willChange: 'mask-image, -webkit-mask-image',
                 }}
-            />
+            >
+                <img
+                    src="/logo.png"
+                    alt=""
+                    draggable={false}
+                    style={{
+                        width: logoSize,
+                        height: 'auto',
+                        opacity: 0.35,
+                        filter: 'brightness(1.1) saturate(1.2)',
+                    }}
+                />
+            </div>
 
             {/* Glow orb — follows cursor, creates ambient light feel */}
             <div
