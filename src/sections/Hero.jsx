@@ -448,17 +448,6 @@ export default function Hero() {
                     fontWeight: 800,
                     letterSpacing: '-0.03em',
                     lineHeight: 1.05,
-                    color: 'var(--text-primary)',
-                    opacity: 0,
-                }}>
-                    Engineering Digital
-                </div>
-                <div className="hero-line" style={{
-                    fontFamily: "'Outfit', sans-serif",
-                    fontSize: 'clamp(2.2rem, 5.5vw, 5rem)',
-                    fontWeight: 800,
-                    letterSpacing: '-0.03em',
-                    lineHeight: 1.05,
                     marginTop: '4px',
                     opacity: 0,
                 }}>
