@@ -42,8 +42,8 @@
   --glow-orange: 0 0 40px rgba(240, 96, 32, 0.3);
 
   /* ── Typography ── */
-  --font-heading: 'Outfit', -apple-system, sans-serif;
-  --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-heading: 'Sora', -apple-system, sans-serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* ── Spacing ── */

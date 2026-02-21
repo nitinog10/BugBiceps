@@ -535,11 +535,11 @@ export default function Hero() {
                 perspective: '1200px',
             }}>
                 <div className="hero-line" style={{
-                    fontFamily: "'Robert Leuschke', serif",
+                    fontFamily: "'Sora', -apple-system, sans-serif",
                     fontSize: 'clamp(2.2rem, 5.5vw, 5rem)',
-                    fontWeight: 700,
+                    fontWeight: 800,
                     fontStyle: 'italic',
-                    letterSpacing: '0.02em',
+                    letterSpacing: '-0.02em',
                     lineHeight: 1.05,
                     marginTop: '4px',
                     opacity: 0,
