@@ -1,6 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { 
+    FaReact, FaPython, FaNode, FaMobile, FaRobot, FaSearch, 
+    FaChartLine, FaPalette, FaCube, FaDocker, FaGit
+} from 'react-icons/fa';
+import { SiVite, SiVercel } from 'react-icons/si';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,46 +14,55 @@ const services = [
         title: 'Web Development',
         desc: 'High-performance web platforms built for scale, speed, and conversion.',
         tag: 'Frontend · Backend · Full-Stack',
+        icons: [FaReact, FaPython, FaNode, FaDocker, FaGit, SiVite, SiVercel],
     },
     {
         title: 'App Development',
         desc: 'Native & cross-platform mobile applications with pixel-perfect UX.',
         tag: 'iOS · Android · React Native',
+        icons: [FaMobile, FaReact, FaNode, FaPython, FaDocker, FaGit, FaRobot],
     },
     {
         title: 'AI Fine-Tuning',
         desc: 'Domain-specific LLM fine-tuning for production-grade AI systems.',
         tag: 'GPT · LLaMA · Mistral',
+        icons: [FaRobot, FaPython, FaDatabase, FaDocker, FaGit, FaNode],
     },
     {
         title: 'RAG Systems & Chatbots',
         desc: 'Retrieval-augmented generation pipelines with intelligent conversational agents.',
         tag: 'Vector DB · Embeddings · Agents',
+        icons: [FaRobot, FaNode, FaDatabase, FaPython, FaDocker, FaGit],
     },
     {
         title: 'Automation Engineering',
         desc: 'End-to-end workflow automation that eliminates manual processes.',
         tag: 'Pipelines · ETL · Integration',
+        icons: [FaPython, FaNode],
     },
     {
         title: 'SEO / GEO Optimization',
         desc: 'Data-driven search and generative engine optimization strategies.',
         tag: 'Technical SEO · AI Search · Analytics',
+        icons: [FaSearch, FaChartLine],
     },
     {
         title: 'Digital Marketing',
         desc: 'Performance marketing campaigns with measurable ROI.',
         tag: 'PPC · Social · Growth',
+        icons: [FaChartLine],
     },
     {
         title: 'Graphic Design',
         desc: 'Visual identity systems and brand design that commands attention.',
         tag: 'Branding · UI/UX · Visual',
+        icons: [FaPalette],
     },
     {
         title: 'Blender / 3D Visualization',
         desc: '3D modeling, animation, and cinematic visual effects.',
         tag: 'Modeling · Animation · Render',
+        icons: [FaCube],
     },
 ];
 
@@ -339,6 +353,27 @@ export default function Services() {
                                     }}>
                                         {service.tag}
                                     </span>
+
+                                    {/* Icons */}
+                                    <div style={{
+                                        display: 'flex',
+                                        gap: '12px',
+                                        marginTop: '14px',
+                                        paddingTop: '14px',
+                                        borderTop: '1px solid rgba(240, 176, 32, 0.05)',
+                                    }}>
+                                        {service.icons?.map((IconComponent, idx) => (
+                                            <IconComponent
+                                                key={idx}
+                                                style={{
+                                                    fontSize: '18px',
+                                                    color: '#888899',
+                                                    opacity: 0.7,
+                                                    transition: 'all 0.3s ease',
+                                                }}
+                                            />
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         );

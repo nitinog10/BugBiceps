@@ -1,8 +1,31 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { 
+    FaPython, FaReact, FaNode, FaDatabase, FaClock, FaRobot, FaLink
+} from 'react-icons/fa';
+import { SiPostgresql, SiVuedotjs, SiNextdotjs } from 'react-icons/si';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Tech icon mapping
+const getTechIcon = (tech) => {
+    const iconMap = {
+        'PyTorch': FaPython,
+        'FastAPI': FaPython,
+        'Redis': FaDatabase,
+        'React': FaReact,
+        'LangChain': FaLink,
+        'GPT-4': FaRobot,
+        'Pinecone': FaDatabase,
+        'Next.js': SiNextdotjs,
+        'Node.js': FaNode,
+        'Temporal': FaClock,
+        'PostgreSQL': SiPostgresql,
+        'Vue': SiVuedotjs,
+    };
+    return iconMap[tech] || null;
+};
 
 const projects = [
     {
@@ -305,6 +328,7 @@ export default function CaseStudies() {
                                         gap: '6px',
                                         marginTop: '18px',
                                         flexWrap: 'wrap',
+                                        marginBottom: '12px',
                                     }}>
                                         {project.tech.map(t => (
                                             <span key={t} style={{
@@ -319,6 +343,30 @@ export default function CaseStudies() {
                                                 {t}
                                             </span>
                                         ))}
+                                    </div>
+
+                                    {/* Tech icons */}
+                                    <div style={{
+                                        display: 'flex',
+                                        gap: '10px',
+                                        marginBottom: '12px',
+                                        paddingBottom: '12px',
+                                        borderBottom: '1px solid rgba(240, 176, 32, 0.05)',
+                                    }}>
+                                        {project.tech.map(t => {
+                                            const IconComponent = getTechIcon(t);
+                                            return IconComponent ? (
+                                                <IconComponent
+                                                    key={`icon-${t}`}
+                                                    style={{
+                                                        fontSize: '16px',
+                                                        color: '#888899',
+                                                        opacity: 0.7,
+                                                        transition: 'all 0.3s ease',
+                                                    }}
+                                                />
+                                            ) : null;
+                                        })}
                                     </div>
 
                                     {/* View link */}
