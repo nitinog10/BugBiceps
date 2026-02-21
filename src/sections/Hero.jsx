@@ -304,7 +304,7 @@ export default function Hero() {
                 opacity: 0,
                 y: -40,
                 duration: 1.2,
-                delay: 3.2,
+                delay: 1.6,
                 ease: 'expo.inOut',
                 onComplete: () => {
                     if (loaderRef.current) {
@@ -313,7 +313,7 @@ export default function Hero() {
                 }
             });
 
-            const tl = gsap.timeline({ delay: 3.8 });
+            const tl = gsap.timeline({ delay: 2.2 });
 
             // Badge
             tl.fromTo(badgeRef.current,
@@ -457,34 +457,75 @@ export default function Hero() {
                 marginBottom: '36px',
                 textAlign: 'center',
                 opacity: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '32px',
             }}>
+                {/* Animated spinner */}
+                <div style={{
+                    position: 'relative',
+                    width: '80px',
+                    height: '80px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}>
+                    {/* Outer rotating ring */}
+                    <div style={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: '50%',
+                        border: '2px solid transparent',
+                        borderTop: '2px solid rgba(240,176,32,0.8)',
+                        borderRight: '2px solid rgba(240,96,32,0.6)',
+                        animation: 'spin 2s linear infinite',
+                    }} />
+                    {/* Inner pulsing circle */}
+                    <div style={{
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        background: 'radial-gradient(circle, rgba(240,176,32,0.4) 0%, rgba(240,176,32,0.1) 70%)',
+                        boxShadow: '0 0 20px rgba(240,176,32,0.3)',
+                        animation: 'pulse-loader 1.5s ease-in-out infinite',
+                    }} />
+                </div>
+
+                {/* Status text */}
                 <div style={{
                     display: 'flex',
-                    justifyContent: 'center',
+                    flexDirection: 'column',
+                    gap: '8px',
                     alignItems: 'center',
-                    gap: '6px',
-                    marginBottom: '24px',
                 }}>
-                    {[0, 1, 2].map((i) => (
-                        <div key={i} style={{
-                            width: '8px',
-                            height: '8px',
-                            borderRadius: '50%',
-                            background: 'linear-gradient(135deg, #F0B020 0%, #F06020 50%, #E83030 100%)',
-                            animation: `pulse 1.5s ease-in-out infinite`,
-                            animationDelay: `${i * 0.15}s`,
-                        }} />
-                    ))}
+                    <p style={{
+                        fontFamily: "'JetBrains Mono', monospace",
+                        fontSize: '0.85rem',
+                        color: 'rgba(240,176,32,0.7)',
+                        letterSpacing: '0.1em',
+                        animation: 'blink 2s ease-in-out infinite',
+                    }}>
+                        initializing code...
+                    </p>
+                    <div style={{
+                        display: 'flex',
+                        gap: '4px',
+                        fontSize: '0.7rem',
+                        fontFamily: "'JetBrains Mono', monospace",
+                        color: 'rgba(240,96,32,0.5)',
+                    }}>
+                        {['<', '/', '>'].map((char, i) => (
+                            <span key={i} style={{
+                                animation: 'float 1s ease-in-out infinite',
+                                animationDelay: `${i * 0.1}s`,
+                            }}>
+                                {char}
+                            </span>
+                        ))}
+                    </div>
                 </div>
-                <p style={{
-                    fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: '0.85rem',
-                    color: 'rgba(240,176,32,0.6)',
-                    letterSpacing: '0.1em',
-                    animation: 'blink 1s ease-in-out infinite',
-                }}>
-                    initializing code...
-                </p>
             </div>
 
             {/* Main heading */}
@@ -494,9 +535,10 @@ export default function Hero() {
                 perspective: '1200px',
             }}>
                 <div className="hero-line" style={{
-                    fontFamily: "'Caveat', cursive",
+                    fontFamily: "'Robert Leuschke', serif",
                     fontSize: 'clamp(2.2rem, 5.5vw, 5rem)',
                     fontWeight: 700,
+                    fontStyle: 'italic',
                     letterSpacing: '0.02em',
                     lineHeight: 1.05,
                     marginTop: '4px',
