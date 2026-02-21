@@ -295,9 +295,24 @@ export default function Hero() {
     const badgeRef = useRef(null);
     const scrollIndicatorRef = useRef(null);
     const ctaRef = useRef(null);
+    const loaderRef = useRef(null);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
+            // Initial loader animation
+            gsap.to(loaderRef.current, {
+                opacity: 0,
+                y: -40,
+                duration: 1.2,
+                delay: 3.2,
+                ease: 'expo.inOut',
+                onComplete: () => {
+                    if (loaderRef.current) {
+                        loaderRef.current.style.display = 'none';
+                    }
+                }
+            });
+
             const tl = gsap.timeline({ delay: 3.8 });
 
             // Badge
@@ -436,6 +451,42 @@ export default function Hero() {
                 </span>
             </div>
 
+            {/* Animated loader */}
+            <div ref={loaderRef} style={{
+                zIndex: 3,
+                marginBottom: '36px',
+                textAlign: 'center',
+                opacity: 1,
+            }}>
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '6px',
+                    marginBottom: '24px',
+                }}>
+                    {[0, 1, 2].map((i) => (
+                        <div key={i} style={{
+                            width: '8px',
+                            height: '8px',
+                            borderRadius: '50%',
+                            background: 'linear-gradient(135deg, #F0B020 0%, #F06020 50%, #E83030 100%)',
+                            animation: `pulse 1.5s ease-in-out infinite`,
+                            animationDelay: `${i * 0.15}s`,
+                        }} />
+                    ))}
+                </div>
+                <p style={{
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: '0.85rem',
+                    color: 'rgba(240,176,32,0.6)',
+                    letterSpacing: '0.1em',
+                    animation: 'blink 1s ease-in-out infinite',
+                }}>
+                    initializing code...
+                </p>
+            </div>
+
             {/* Main heading */}
             <div ref={headingRef} style={{
                 textAlign: 'center',
@@ -443,10 +494,10 @@ export default function Hero() {
                 perspective: '1200px',
             }}>
                 <div className="hero-line" style={{
-                    fontFamily: "'Space Mono', monospace",
+                    fontFamily: "'Caveat', cursive",
                     fontSize: 'clamp(2.2rem, 5.5vw, 5rem)',
                     fontWeight: 700,
-                    letterSpacing: '-0.02em',
+                    letterSpacing: '0.02em',
                     lineHeight: 1.05,
                     marginTop: '4px',
                     opacity: 0,

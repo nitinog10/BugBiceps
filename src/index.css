@@ -325,6 +325,31 @@ h6 {
   }
 }
 
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0.4;
+  }
+}
+
 /* ═══ RESPONSIVE ═══ */
 @media (max-width: 768px) {
   body {
