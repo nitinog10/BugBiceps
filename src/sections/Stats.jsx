@@ -36,14 +36,6 @@ export default function Stats() {
                     }
                 });
             });
-
-            gsap.fromTo('.stat-item',
-                { y: 40, opacity: 0 },
-                {
-                    y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: 'expo.out',
-                    scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' }
-                }
-            );
         }, sectionRef);
 
         return () => ctx.revert();
@@ -62,7 +54,7 @@ export default function Stats() {
                 left: '10%',
                 right: '10%',
                 height: '1px',
-                background: 'linear-gradient(90deg, transparent, rgba(232,168,32,0.2), transparent)',
+                background: 'linear-gradient(90deg, transparent, rgba(240,176,32,0.3), transparent)',
             }} />
 
             <div style={{
@@ -77,31 +69,41 @@ export default function Stats() {
                     textAlign: 'center',
                 }}>
                     {stats.map((stat, i) => (
-                        <div key={stat.label} className="stat-item" style={{
+                        <div key={stat.label} style={{
                             padding: '40px 20px',
-                            opacity: 0,
+                            position: 'relative',
                         }}>
+                            {/* Subtle card background */}
+                            <div style={{
+                                position: 'absolute',
+                                inset: '10px',
+                                borderRadius: '20px',
+                                background: 'rgba(240,176,32,0.03)',
+                                border: '1px solid rgba(240,176,32,0.06)',
+                            }} />
                             <span
                                 ref={el => numberRefs.current[i] = el}
                                 style={{
-                                    fontFamily: "'Space Grotesk', sans-serif",
+                                    fontFamily: "'Outfit', sans-serif",
                                     fontSize: 'clamp(2.5rem, 5vw, 4rem)',
                                     fontWeight: 700,
-                                    background: 'linear-gradient(135deg, #E8A820, #E85820)',
+                                    background: 'linear-gradient(135deg, #F0B020, #F06020)',
                                     WebkitBackgroundClip: 'text',
                                     WebkitTextFillColor: 'transparent',
                                     display: 'block',
+                                    position: 'relative',
                                 }}
                             >
                                 0{stat.suffix}
                             </span>
                             <span style={{
-                                fontFamily: "'Inter', sans-serif",
+                                fontFamily: "'Plus Jakarta Sans', sans-serif",
                                 fontSize: '0.9rem',
                                 color: 'var(--text-secondary)',
                                 marginTop: '12px',
                                 display: 'block',
                                 letterSpacing: '0.05em',
+                                position: 'relative',
                             }}>
                                 {stat.label}
                             </span>
@@ -117,7 +119,7 @@ export default function Stats() {
                 left: '10%',
                 right: '10%',
                 height: '1px',
-                background: 'linear-gradient(90deg, transparent, rgba(232,168,32,0.2), transparent)',
+                background: 'linear-gradient(90deg, transparent, rgba(240,176,32,0.3), transparent)',
             }} />
         </section>
     );

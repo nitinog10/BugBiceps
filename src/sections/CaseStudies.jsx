@@ -62,7 +62,7 @@ export default function CaseStudies() {
             }}>
                 <div className="case-heading" style={{ marginBottom: '60px', opacity: 0 }}>
                     <span style={{
-                        fontFamily: "'Inter', sans-serif",
+                        fontFamily: "'Plus Jakarta Sans', sans-serif",
                         fontSize: '0.8rem',
                         letterSpacing: '0.2em',
                         color: 'var(--gold)',
@@ -70,7 +70,7 @@ export default function CaseStudies() {
                         fontWeight: 500,
                     }}>Selected Work</span>
                     <h2 style={{
-                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontFamily: "'Outfit', sans-serif",
                         fontSize: 'clamp(2rem, 5vw, 3.5rem)',
                         fontWeight: 700,
                         marginTop: '12px',
@@ -118,7 +118,7 @@ export default function CaseStudies() {
                             }}>
                                 <div style={{ flex: 1, minWidth: '280px' }}>
                                     <span style={{
-                                        fontFamily: "'Inter', sans-serif",
+                                        fontFamily: "'Plus Jakarta Sans', sans-serif",
                                         fontSize: '0.75rem',
                                         letterSpacing: '0.15em',
                                         color: 'var(--gold)',
@@ -126,14 +126,14 @@ export default function CaseStudies() {
                                         fontWeight: 500,
                                     }}>{project.category}</span>
                                     <h3 style={{
-                                        fontFamily: "'Space Grotesk', sans-serif",
+                                        fontFamily: "'Outfit', sans-serif",
                                         fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
                                         fontWeight: 700,
                                         marginTop: '12px',
                                         letterSpacing: '-0.02em',
                                     }}>{project.title}</h3>
                                     <p style={{
-                                        fontFamily: "'Inter', sans-serif",
+                                        fontFamily: "'Plus Jakarta Sans', sans-serif",
                                         fontSize: '1rem',
                                         color: 'var(--text-secondary)',
                                         marginTop: '16px',
@@ -146,7 +146,7 @@ export default function CaseStudies() {
                                     alignItems: 'center',
                                     gap: '8px',
                                     color: 'var(--gold)',
-                                    fontFamily: "'Inter', sans-serif",
+                                    fontFamily: "'Plus Jakarta Sans', sans-serif",
                                     fontSize: '0.9rem',
                                     fontWeight: 500,
                                     alignSelf: 'flex-end',
@@ -160,7 +160,7 @@ export default function CaseStudies() {
                                 position: 'absolute',
                                 top: '-20px',
                                 right: '40px',
-                                fontFamily: "'Space Grotesk', sans-serif",
+                                fontFamily: "'Outfit', sans-serif",
                                 fontSize: 'clamp(6rem, 12vw, 12rem)',
                                 fontWeight: 700,
                                 color: 'rgba(232, 168, 32, 0.03)',

@@ -77,7 +77,7 @@ export default function Preloader({ onComplete }) {
             />
             <div ref={counterRef} style={{ textAlign: 'center' }}>
                 <div style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontFamily: "'Outfit', sans-serif",
                     fontSize: 'clamp(3rem, 8vw, 6rem)',
                     fontWeight: 700,
                     background: 'linear-gradient(135deg, #E8A820, #E85820)',

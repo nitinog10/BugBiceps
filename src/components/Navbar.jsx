@@ -26,22 +26,22 @@ export default function Navbar() {
             alignItems: 'center',
             justifyContent: 'space-between',
             transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-            background: scrolled ? 'rgba(10, 10, 15, 0.85)' : 'transparent',
-            backdropFilter: scrolled ? 'blur(20px)' : 'none',
-            WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'none',
-            borderBottom: scrolled ? '1px solid rgba(232, 168, 32, 0.08)' : '1px solid transparent',
+            background: scrolled ? 'rgba(8, 8, 12, 0.9)' : 'transparent',
+            backdropFilter: scrolled ? 'blur(24px)' : 'none',
+            WebkitBackdropFilter: scrolled ? 'blur(24px)' : 'none',
+            borderBottom: scrolled ? '1px solid rgba(240, 176, 32, 0.1)' : '1px solid transparent',
         }}>
             {/* Logo */}
             <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <img src="/logo.png" alt="BugBiceps" style={{ height: '42px', width: 'auto' }} />
                 <span style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontFamily: "'Outfit', sans-serif",
                     fontSize: '1.3rem',
                     fontWeight: 700,
                     letterSpacing: '-0.02em',
                 }}>
-                    <span style={{ color: '#D42B2B' }}>Bug</span>
-                    <span style={{ color: '#E8A820' }}>Biceps</span>
+                    <span style={{ color: '#E83030' }}>Bug</span>
+                    <span style={{ color: '#F0B020' }}>Biceps</span>
                 </span>
             </a>
 
@@ -53,7 +53,7 @@ export default function Navbar() {
             }} className="nav-links-desktop">
                 {links.map(link => (
                     <a key={link} href={`#${link.toLowerCase()}`} style={{
-                        fontFamily: "'Inter', sans-serif",
+                        fontFamily: "'Plus Jakarta Sans', sans-serif",
                         fontSize: '0.9rem',
                         fontWeight: 400,
                         color: 'var(--text-secondary)',
@@ -61,7 +61,7 @@ export default function Navbar() {
                         position: 'relative',
                         letterSpacing: '0.02em',
                     }}
-                        onMouseEnter={e => e.target.style.color = '#E8A820'}
+                        onMouseEnter={e => e.target.style.color = '#F0B020'}
                         onMouseLeave={e => e.target.style.color = 'var(--text-secondary)'}
                     >
                         {link}
@@ -69,22 +69,23 @@ export default function Navbar() {
                 ))}
                 <button style={{
                     padding: '10px 24px',
-                    background: 'linear-gradient(135deg, #E8A820, #E85820)',
-                    color: '#0A0A0F',
-                    fontFamily: "'Space Grotesk', sans-serif",
+                    background: 'linear-gradient(135deg, #F0B020, #F06020)',
+                    color: '#08080C',
+                    fontFamily: "'Outfit', sans-serif",
                     fontSize: '0.85rem',
                     fontWeight: 600,
                     borderRadius: '50px',
                     letterSpacing: '0.02em',
                     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                    boxShadow: '0 0 20px rgba(240, 176, 32, 0.15)',
                 }}
                     onMouseEnter={e => {
                         e.target.style.transform = 'scale(1.05)';
-                        e.target.style.boxShadow = '0 0 30px rgba(232, 168, 32, 0.4)';
+                        e.target.style.boxShadow = '0 0 35px rgba(240, 176, 32, 0.4)';
                     }}
                     onMouseLeave={e => {
                         e.target.style.transform = 'scale(1)';
-                        e.target.style.boxShadow = 'none';
+                        e.target.style.boxShadow = '0 0 20px rgba(240, 176, 32, 0.15)';
                     }}
                 >
                     Build With BugBiceps
@@ -127,8 +128,8 @@ export default function Navbar() {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'rgba(10, 10, 15, 0.95)',
-                    backdropFilter: 'blur(20px)',
+                    background: 'rgba(8, 8, 12, 0.97)',
+                    backdropFilter: 'blur(24px)',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -140,7 +141,7 @@ export default function Navbar() {
                         <a key={link} href={`#${link.toLowerCase()}`}
                             onClick={() => setMenuOpen(false)}
                             style={{
-                                fontFamily: "'Space Grotesk', sans-serif",
+                                fontFamily: "'Outfit', sans-serif",
                                 fontSize: '1.5rem',
                                 fontWeight: 600,
                                 color: 'var(--text-primary)',

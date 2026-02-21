@@ -29,7 +29,6 @@ function App() {
     useEffect(() => {
         if (loading) return;
 
-        // Lenis smooth scroll
         const lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -56,10 +55,65 @@ function App() {
                     <CustomCursor />
                     <ScrollProgress />
                     <Navbar />
+
+                    {/* Global ambient background */}
+                    <div style={{
+                        position: 'fixed',
+                        inset: 0,
+                        zIndex: -1,
+                        background: '#08080C',
+                        pointerEvents: 'none',
+                    }}>
+                        {/* Persistent ambient gradient blobs */}
+                        <div style={{
+                            position: 'absolute',
+                            top: '10%',
+                            left: '5%',
+                            width: '40vw',
+                            height: '40vw',
+                            maxWidth: '500px',
+                            maxHeight: '500px',
+                            borderRadius: '50%',
+                            background: 'radial-gradient(circle, rgba(240,176,32,0.06) 0%, transparent 60%)',
+                            filter: 'blur(100px)',
+                            animation: 'pulse-glow 12s ease-in-out infinite',
+                        }} />
+                        <div style={{
+                            position: 'absolute',
+                            bottom: '20%',
+                            right: '10%',
+                            width: '35vw',
+                            height: '35vw',
+                            maxWidth: '450px',
+                            maxHeight: '450px',
+                            borderRadius: '50%',
+                            background: 'radial-gradient(circle, rgba(232,48,48,0.04) 0%, transparent 60%)',
+                            filter: 'blur(100px)',
+                            animation: 'pulse-glow 15s ease-in-out infinite',
+                            animationDelay: '5s',
+                        }} />
+                    </div>
+
                     <main>
                         <Hero />
+                        {/* Section divider */}
+                        <div style={{
+                            width: '100%',
+                            height: '1px',
+                            background: 'linear-gradient(90deg, transparent, rgba(240,176,32,0.15), transparent)',
+                        }} />
                         <Services />
+                        <div style={{
+                            width: '100%',
+                            height: '1px',
+                            background: 'linear-gradient(90deg, transparent, rgba(240,176,32,0.15), transparent)',
+                        }} />
                         <AIShowcase />
+                        <div style={{
+                            width: '100%',
+                            height: '1px',
+                            background: 'linear-gradient(90deg, transparent, rgba(240,176,32,0.15), transparent)',
+                        }} />
                         <CaseStudies />
                         <Philosophy />
                         <Stats />

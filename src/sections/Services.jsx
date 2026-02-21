@@ -29,15 +29,19 @@ function ServiceCard({ service, index }) {
         const x = (e.clientX - rect.left) / rect.width - 0.5;
         const y = (e.clientY - rect.top) / rect.height - 0.5;
         card.style.transform = `perspective(800px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) scale(1.02)`;
-        card.querySelector('.card-glow').style.opacity = '1';
-        card.querySelector('.card-glow').style.background = `radial-gradient(circle at ${e.clientX - rect.left}px ${e.clientY - rect.top}px, rgba(232,168,32,0.12), transparent 60%)`;
+        const glow = card.querySelector('.card-glow');
+        if (glow) {
+            glow.style.opacity = '1';
+            glow.style.background = `radial-gradient(circle at ${e.clientX - rect.left}px ${e.clientY - rect.top}px, rgba(240,176,32,0.2), transparent 60%)`;
+        }
     };
 
     const handleMouseLeave = () => {
         const card = cardRef.current;
         if (!card) return;
         card.style.transform = 'perspective(800px) rotateY(0deg) rotateX(0deg) scale(1)';
-        card.querySelector('.card-glow').style.opacity = '0';
+        const glow = card.querySelector('.card-glow');
+        if (glow) glow.style.opacity = '0';
     };
 
     return (
@@ -51,18 +55,27 @@ function ServiceCard({ service, index }) {
                 width: '340px',
                 height: '380px',
                 padding: '40px 32px',
-                background: 'rgba(22, 22, 34, 0.5)',
+                background: 'linear-gradient(145deg, rgba(20,20,32,0.9), rgba(14,14,22,0.95))',
                 backdropFilter: 'blur(20px)',
                 WebkitBackdropFilter: 'blur(20px)',
-                border: '1px solid rgba(232, 168, 32, 0.08)',
+                border: '1px solid rgba(240, 176, 32, 0.12)',
                 borderRadius: '20px',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '20px',
                 position: 'relative',
                 overflow: 'hidden',
-                transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease',
+                transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.3s ease',
                 cursor: 'none',
+                boxShadow: '0 4px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(240,176,32,0.05)',
+            }}
+            onMouseEnter={e => {
+                e.currentTarget.style.borderColor = 'rgba(240, 176, 32, 0.3)';
+                e.currentTarget.style.boxShadow = '0 8px 40px rgba(240,176,32,0.15), inset 0 1px 0 rgba(240,176,32,0.1)';
+            }}
+            onMouseOut={e => {
+                e.currentTarget.style.borderColor = 'rgba(240, 176, 32, 0.12)';
+                e.currentTarget.style.boxShadow = '0 4px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(240,176,32,0.05)';
             }}
         >
             <div className="card-glow" style={{
@@ -81,7 +94,7 @@ function ServiceCard({ service, index }) {
                 left: '32px',
                 right: '32px',
                 height: '2px',
-                background: 'linear-gradient(90deg, transparent, rgba(232,168,32,0.3), transparent)',
+                background: 'linear-gradient(90deg, transparent, rgba(240,176,32,0.4), transparent)',
             }} />
 
             <div style={{
@@ -91,17 +104,18 @@ function ServiceCard({ service, index }) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'rgba(232, 168, 32, 0.08)',
+                background: 'rgba(240, 176, 32, 0.12)',
                 borderRadius: '14px',
                 position: 'relative',
                 zIndex: 1,
+                border: '1px solid rgba(240,176,32,0.08)',
             }}>
                 {service.icon}
             </div>
 
             <div style={{ position: 'relative', zIndex: 1 }}>
                 <span style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontFamily: "'Outfit', sans-serif",
                     fontSize: '0.7rem',
                     fontWeight: 600,
                     color: 'var(--gold)',
@@ -111,7 +125,7 @@ function ServiceCard({ service, index }) {
                     {String(index + 1).padStart(2, '0')}
                 </span>
                 <h3 style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontFamily: "'Outfit', sans-serif",
                     fontSize: '1.4rem',
                     fontWeight: 700,
                     color: 'var(--text-primary)',
@@ -121,7 +135,7 @@ function ServiceCard({ service, index }) {
                     {service.title}
                 </h3>
                 <p style={{
-                    fontFamily: "'Inter', sans-serif",
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
                     fontSize: '0.9rem',
                     color: 'var(--text-secondary)',
                     marginTop: '12px',
@@ -131,21 +145,20 @@ function ServiceCard({ service, index }) {
                 </p>
             </div>
 
-            {/* Bottom arrow */}
             <div style={{
                 marginTop: 'auto',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px',
                 color: 'var(--gold)',
-                fontFamily: "'Inter', sans-serif",
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
                 fontSize: '0.85rem',
                 fontWeight: 500,
                 position: 'relative',
                 zIndex: 1,
             }}>
                 Learn more
-                <span style={{ fontSize: '1.1rem', transition: 'transform 0.3s ease' }}>→</span>
+                <span style={{ fontSize: '1.1rem' }}>→</span>
             </div>
         </div>
     );
@@ -158,7 +171,6 @@ export default function Services() {
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            // Heading animation
             gsap.fromTo(headingRef.current,
                 { y: 60, opacity: 0 },
                 {
@@ -170,7 +182,6 @@ export default function Services() {
                 }
             );
 
-            // Horizontal scroll
             const track = trackRef.current;
             if (!track) return;
             const totalScroll = track.scrollWidth - window.innerWidth;
@@ -198,12 +209,25 @@ export default function Services() {
             overflow: 'hidden',
             background: 'var(--bg-primary)',
         }}>
+            {/* Section background glow */}
+            <div style={{
+                position: 'absolute',
+                top: '50%',
+                left: '20%',
+                width: '500px',
+                height: '500px',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(240,176,32,0.06) 0%, transparent 70%)',
+                filter: 'blur(80px)',
+                pointerEvents: 'none',
+            }} />
+
             <div style={{
                 padding: '80px clamp(20px, 4vw, 60px) 40px',
             }}>
-                <div ref={headingRef} style={{ opacity: 0 }}>
+                <div ref={headingRef}>
                     <span style={{
-                        fontFamily: "'Inter', sans-serif",
+                        fontFamily: "'Plus Jakarta Sans', sans-serif",
                         fontSize: '0.8rem',
                         letterSpacing: '0.2em',
                         color: 'var(--gold)',
@@ -213,7 +237,7 @@ export default function Services() {
                         What We Build
                     </span>
                     <h2 style={{
-                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontFamily: "'Outfit', sans-serif",
                         fontSize: 'clamp(2rem, 5vw, 3.5rem)',
                         fontWeight: 700,
                         color: 'var(--text-primary)',
@@ -221,7 +245,7 @@ export default function Services() {
                         letterSpacing: '-0.02em',
                     }}>
                         Services & <span style={{
-                            background: 'linear-gradient(135deg, #E8A820, #E85820)',
+                            background: 'linear-gradient(135deg, #F0B020, #F06020)',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
                         }}>Capabilities</span>

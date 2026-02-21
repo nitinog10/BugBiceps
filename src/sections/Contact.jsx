@@ -29,7 +29,7 @@ export default function Contact() {
         border: 'none',
         borderBottom: '1px solid rgba(232, 168, 32, 0.15)',
         color: 'var(--text-primary)',
-        fontFamily: "'Inter', sans-serif",
+        fontFamily: "'Plus Jakarta Sans', sans-serif",
         fontSize: '1rem',
         outline: 'none',
         transition: 'border-color 0.3s ease',
@@ -55,7 +55,7 @@ export default function Contact() {
             }}>
                 <div className="contact-item" style={{ textAlign: 'center', marginBottom: '60px', opacity: 0 }}>
                     <span style={{
-                        fontFamily: "'Inter', sans-serif",
+                        fontFamily: "'Plus Jakarta Sans', sans-serif",
                         fontSize: '0.8rem',
                         letterSpacing: '0.2em',
                         color: 'var(--gold)',
@@ -65,7 +65,7 @@ export default function Contact() {
                         Start a Project
                     </span>
                     <h2 style={{
-                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontFamily: "'Outfit', sans-serif",
                         fontSize: 'clamp(2rem, 5vw, 3.5rem)',
                         fontWeight: 700,
                         marginTop: '12px',
@@ -87,7 +87,7 @@ export default function Contact() {
                 }}>
                     <div className="contact-item" style={{ opacity: 0 }}>
                         <label style={{
-                            fontFamily: "'Inter', sans-serif",
+                            fontFamily: "'Plus Jakarta Sans', sans-serif",
                             fontSize: '0.75rem',
                             color: 'var(--text-muted)',
                             letterSpacing: '0.1em',
@@ -106,7 +106,7 @@ export default function Contact() {
 
                     <div className="contact-item" style={{ opacity: 0 }}>
                         <label style={{
-                            fontFamily: "'Inter', sans-serif",
+                            fontFamily: "'Plus Jakarta Sans', sans-serif",
                             fontSize: '0.75rem',
                             color: 'var(--text-muted)',
                             letterSpacing: '0.1em',
@@ -125,7 +125,7 @@ export default function Contact() {
 
                     <div className="contact-item" style={{ opacity: 0 }}>
                         <label style={{
-                            fontFamily: "'Inter', sans-serif",
+                            fontFamily: "'Plus Jakarta Sans', sans-serif",
                             fontSize: '0.75rem',
                             color: 'var(--text-muted)',
                             letterSpacing: '0.1em',
@@ -151,7 +151,7 @@ export default function Contact() {
                             padding: '16px 48px',
                             background: 'linear-gradient(135deg, #E8A820, #E85820)',
                             color: '#0A0A0F',
-                            fontFamily: "'Space Grotesk', sans-serif",
+                            fontFamily: "'Outfit', sans-serif",
                             fontSize: '1rem',
                             fontWeight: 600,
                             borderRadius: '50px',

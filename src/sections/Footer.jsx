@@ -3,7 +3,7 @@ export default function Footer() {
         <footer style={{
             padding: '60px 0 40px',
             background: 'var(--bg-primary)',
-            borderTop: '1px solid rgba(232, 168, 32, 0.06)',
+            borderTop: '1px solid rgba(240, 176, 32, 0.1)',
         }}>
             <div style={{
                 maxWidth: 'var(--container-max)',
@@ -23,16 +23,16 @@ export default function Footer() {
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
                             <img src="/logo.png" alt="BugBiceps" style={{ height: '36px', width: 'auto' }} />
                             <span style={{
-                                fontFamily: "'Space Grotesk', sans-serif",
+                                fontFamily: "'Outfit', sans-serif",
                                 fontSize: '1.2rem',
                                 fontWeight: 700,
                             }}>
-                                <span style={{ color: '#D42B2B' }}>Bug</span>
-                                <span style={{ color: '#E8A820' }}>Biceps</span>
+                                <span style={{ color: '#E83030' }}>Bug</span>
+                                <span style={{ color: '#F0B020' }}>Biceps</span>
                             </span>
                         </div>
                         <p style={{
-                            fontFamily: "'Inter', sans-serif",
+                            fontFamily: "'Plus Jakarta Sans', sans-serif",
                             fontSize: '0.85rem',
                             color: 'var(--text-secondary)',
                             lineHeight: 1.6,
@@ -45,7 +45,7 @@ export default function Footer() {
                     <div style={{ display: 'flex', gap: '60px', flexWrap: 'wrap' }}>
                         <div>
                             <h4 style={{
-                                fontFamily: "'Space Grotesk', sans-serif",
+                                fontFamily: "'Outfit', sans-serif",
                                 fontSize: '0.8rem',
                                 fontWeight: 600,
                                 color: 'var(--gold)',
@@ -56,13 +56,13 @@ export default function Footer() {
                             {['Home', 'Services', 'Work', 'About', 'Contact'].map(link => (
                                 <a key={link} href={`#${link.toLowerCase()}`} style={{
                                     display: 'block',
-                                    fontFamily: "'Inter', sans-serif",
+                                    fontFamily: "'Plus Jakarta Sans', sans-serif",
                                     fontSize: '0.85rem',
                                     color: 'var(--text-secondary)',
                                     marginBottom: '10px',
                                     transition: 'color 0.3s ease',
                                 }}
-                                    onMouseEnter={e => e.target.style.color = '#E8A820'}
+                                    onMouseEnter={e => e.target.style.color = '#F0B020'}
                                     onMouseLeave={e => e.target.style.color = 'var(--text-secondary)'}
                                 >
                                     {link}
@@ -72,7 +72,7 @@ export default function Footer() {
 
                         <div>
                             <h4 style={{
-                                fontFamily: "'Space Grotesk', sans-serif",
+                                fontFamily: "'Outfit', sans-serif",
                                 fontSize: '0.8rem',
                                 fontWeight: 600,
                                 color: 'var(--gold)',
@@ -83,7 +83,7 @@ export default function Footer() {
                             {['AI Engineering', 'Web Development', 'App Development', 'Automation'].map(link => (
                                 <span key={link} style={{
                                     display: 'block',
-                                    fontFamily: "'Inter', sans-serif",
+                                    fontFamily: "'Plus Jakarta Sans', sans-serif",
                                     fontSize: '0.85rem',
                                     color: 'var(--text-secondary)',
                                     marginBottom: '10px',
@@ -97,7 +97,7 @@ export default function Footer() {
 
                 {/* Bottom bar */}
                 <div style={{
-                    borderTop: '1px solid rgba(232, 168, 32, 0.06)',
+                    borderTop: '1px solid rgba(240, 176, 32, 0.1)',
                     paddingTop: '24px',
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -106,14 +106,14 @@ export default function Footer() {
                     gap: '12px',
                 }}>
                     <p style={{
-                        fontFamily: "'Inter', sans-serif",
+                        fontFamily: "'Plus Jakarta Sans', sans-serif",
                         fontSize: '0.8rem',
                         color: 'var(--text-muted)',
                     }}>
                         © 2026 BugBiceps. All rights reserved.
                     </p>
                     <p style={{
-                        fontFamily: "'Inter', sans-serif",
+                        fontFamily: "'Plus Jakarta Sans', sans-serif",
                         fontSize: '0.8rem',
                         color: 'var(--text-muted)',
                     }}>
