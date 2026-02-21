@@ -1,0 +1,205 @@
+/* ═══════════════════════════════════════════════
+   BUGBICEPS DESIGN SYSTEM
+   Colors extracted from logo
+   ═══════════════════════════════════════════════ */
+
+:root {
+  /* ── Logo-derived Colors ── */
+  --gold: #E8A820;
+  --gold-light: #F5C842;
+  --gold-dark: #C48A10;
+  --red: #D42B2B;
+  --red-light: #E84545;
+  --orange: #E85820;
+  --orange-light: #F07040;
+
+  /* ── Backgrounds ── */
+  --bg-primary: #0A0A0F;
+  --bg-secondary: #101018;
+  --bg-surface: #161622;
+  --bg-surface-light: #1E1E2E;
+  --bg-card: rgba(22, 22, 34, 0.6);
+
+  /* ── Text ── */
+  --text-primary: #F0F0F5;
+  --text-secondary: #8888A0;
+  --text-muted: #555568;
+
+  /* ── Gradients ── */
+  --gradient-gold: linear-gradient(135deg, #E8A820 0%, #E85820 100%);
+  --gradient-red-gold: linear-gradient(135deg, #D42B2B 0%, #E8A820 100%);
+  --gradient-glow: linear-gradient(135deg, rgba(232, 168, 32, 0.15) 0%, rgba(232, 88, 32, 0.08) 100%);
+  --gradient-mesh: radial-gradient(ellipse at 20% 50%, rgba(232, 168, 32, 0.08) 0%, transparent 50%),
+                   radial-gradient(ellipse at 80% 20%, rgba(212, 43, 43, 0.06) 0%, transparent 50%),
+                   radial-gradient(ellipse at 50% 80%, rgba(232, 88, 32, 0.05) 0%, transparent 50%);
+
+  /* ── Glow ── */
+  --glow-gold: 0 0 30px rgba(232, 168, 32, 0.3);
+  --glow-red: 0 0 30px rgba(212, 43, 43, 0.3);
+  --glow-orange: 0 0 30px rgba(232, 88, 32, 0.3);
+
+  /* ── Typography ── */
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* ── Spacing ── */
+  --section-pad: clamp(80px, 10vw, 160px);
+  --container-max: 1400px;
+
+  /* ── Transitions ── */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ═══ RESET ═══ */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: none;
+}
+
+button {
+  cursor: none;
+  border: none;
+  outline: none;
+  background: none;
+  font-family: var(--font-body);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+input, textarea {
+  cursor: none;
+}
+
+/* ═══ SCROLLBAR ═══ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold-dark);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
+/* ═══ SELECTION ═══ */
+::selection {
+  background: rgba(232, 168, 32, 0.3);
+  color: var(--text-primary);
+}
+
+/* ═══ UTILITY CLASSES ═══ */
+.glass {
+  background: rgba(22, 22, 34, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(232, 168, 32, 0.08);
+}
+
+.gradient-text {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 60px);
+}
+
+/* ═══ TYPOGRAPHY ═══ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.heading-xl {
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.heading-lg {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700;
+}
+
+.heading-md {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 600;
+}
+
+.body-lg {
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ═══ ANIMATIONS ═══ */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(2deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes scroll-down {
+  0% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(8px); opacity: 0.5; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 768px) {
+  body {
+    cursor: auto;
+  }
+  a, button, input, textarea {
+    cursor: auto;
+  }
+}
