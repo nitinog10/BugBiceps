@@ -55,14 +55,13 @@ const services = [
 export default function Services() {
     const sectionRef = useRef(null);
     const headingRef = useRef(null);
-    const maskRef = useRef(null);
     const cardsRef = useRef([]);
+    const glowLinesRef = useRef([]);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
 
             // ── Heading entrance ──
-            // Minimal slide-up, nothing dramatic
             gsap.fromTo(headingRef.current,
                 { y: 40, opacity: 0 },
                 {
@@ -77,67 +76,113 @@ export default function Services() {
                 }
             );
 
-            // ── Masked container clip-path reveal ──
-            // The entire card grid emerges with a vertical wipe
-            gsap.fromTo(maskRef.current,
-                { clipPath: 'inset(0 0 100% 0)' },
-                {
-                    clipPath: 'inset(0 0 0% 0)',
-                    duration: 1.2,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: maskRef.current,
-                        start: 'top 82%',
-                    },
-                }
-            );
+            // ── Each card enters individually on scroll ──
+            // Alternating slant: odd = from left, even = from right
+            cardsRef.current.forEach((card, i) => {
+                if (!card) return;
 
-            // ── Staggered card entrance ──
-            // Each card slides up within the mask — clean sequencing
-            const cards = cardsRef.current.filter(Boolean);
-            gsap.fromTo(cards,
-                {
-                    y: 80,
-                    opacity: 0,
-                    scale: 0.98,
-                },
-                {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    duration: 1,
-                    stagger: 0.12,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: maskRef.current,
-                        start: 'top 80%',
+                const isEven = i % 2 === 0;
+                const xOffset = isEven ? -80 : 80;
+                const rotation = isEven ? -3 : 3;
+
+                gsap.fromTo(card,
+                    {
+                        x: xOffset,
+                        y: 50,
+                        opacity: 0,
+                        rotate: rotation,
+                        scale: 0.92,
+                        filter: 'blur(3px)',
                     },
+                    {
+                        x: isEven ? -20 : 20,       // Final resting slant offset
+                        y: 0,
+                        opacity: 1,
+                        rotate: isEven ? -1.5 : 1.5, // Subtle resting slant
+                        scale: 1,
+                        filter: 'blur(0px)',
+                        duration: 1,
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: card,
+                            start: 'top 88%',
+                            end: 'top 50%',
+                            toggleActions: 'play none none none',
+                        },
+                    }
+                );
+
+                // Activation glow line
+                const line = glowLinesRef.current[i];
+                if (line) {
+                    gsap.fromTo(line,
+                        { scaleX: 0, opacity: 0 },
+                        {
+                            scaleX: 1,
+                            opacity: 1,
+                            duration: 0.7,
+                            ease: 'power3.out',
+                            scrollTrigger: {
+                                trigger: card,
+                                start: 'top 85%',
+                            },
+                            delay: 0.35,
+                        }
+                    );
                 }
-            );
+            });
 
         }, sectionRef);
 
         return () => ctx.revert();
     }, []);
 
+    // ── Hover: lift + straighten ──
+    const handleMouseEnter = (cardEl, i) => {
+        if (!cardEl) return;
+        gsap.to(cardEl, {
+            y: -8,
+            rotate: 0,            // Straighten on hover
+            scale: 1.03,
+            duration: 0.4,
+            ease: 'power2.out',
+            overwrite: 'auto',
+        });
+    };
+
+    const handleMouseLeave = (cardEl, i) => {
+        if (!cardEl) return;
+        const isEven = i % 2 === 0;
+        gsap.to(cardEl, {
+            y: 0,
+            rotate: isEven ? -1.5 : 1.5,  // Back to resting slant
+            scale: 1,
+            duration: 0.5,
+            ease: 'power3.out',
+            overwrite: 'auto',
+        });
+    };
+
     return (
         <section id="services" ref={sectionRef} style={{
             position: 'relative',
             padding: 'var(--section-pad) 0',
             background: 'var(--bg-primary)',
+            overflow: 'hidden',
         }}>
             <div style={{
-                maxWidth: 'var(--container-max)',
+                maxWidth: '720px',
                 margin: '0 auto',
                 padding: '0 clamp(24px, 5vw, 80px)',
             }}>
                 {/* ── Section heading ── */}
                 <div ref={headingRef} style={{
-                    marginBottom: '64px',
+                    marginBottom: '80px',
+                    textAlign: 'center',
                     opacity: 0,
                 }}>
                     <span style={{
-                        fontFamily: "var(--font-mono)",
+                        fontFamily: 'var(--font-mono)',
                         fontSize: '0.7rem',
                         letterSpacing: '0.2em',
                         color: 'rgba(240, 176, 32, 0.55)',
@@ -149,7 +194,7 @@ export default function Services() {
                         What We Build
                     </span>
                     <h2 style={{
-                        fontFamily: "var(--font-heading)",
+                        fontFamily: 'var(--font-heading)',
                         fontSize: 'clamp(2rem, 4.5vw, 3.4rem)',
                         fontWeight: 800,
                         color: 'var(--text-primary)',
@@ -164,11 +209,12 @@ export default function Services() {
                         }}>Capabilities</span>
                     </h2>
                     <p style={{
-                        fontFamily: "var(--font-body)",
+                        fontFamily: 'var(--font-body)',
                         fontSize: '0.95rem',
                         color: 'var(--text-secondary)',
                         marginTop: '14px',
                         maxWidth: '480px',
+                        margin: '14px auto 0',
                         lineHeight: 1.7,
                     }}>
                         From concept to deployment — we engineer systems
@@ -176,101 +222,159 @@ export default function Services() {
                     </p>
                 </div>
 
-                {/* ── Masked reveal container ── */}
-                <div ref={maskRef} style={{
-                    overflow: 'hidden',
-                    clipPath: 'inset(0 0 100% 0)',
+                {/* ── Stacked mirror cards ── */}
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '28px',
+                    alignItems: 'center',
                 }}>
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-                        gap: '1px',
-                        background: 'rgba(240, 176, 32, 0.04)',
-                        borderRadius: '16px',
-                        overflow: 'hidden',
-                        border: '1px solid rgba(240, 176, 32, 0.04)',
-                    }}>
-                        {services.map((service, i) => (
+                    {services.map((service, i) => {
+                        const isEven = i % 2 === 0;
+
+                        return (
                             <div
                                 key={service.title}
                                 ref={el => cardsRef.current[i] = el}
                                 data-cursor-hover
+                                onMouseEnter={() => handleMouseEnter(cardsRef.current[i], i)}
+                                onMouseLeave={() => handleMouseLeave(cardsRef.current[i], i)}
                                 style={{
-                                    padding: '40px 36px',
-                                    background: 'var(--bg-primary)',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    gap: '16px',
-                                    opacity: 0,
-                                    transition: 'background 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                                    cursor: 'none',
+                                    width: '100%',
+                                    maxWidth: '580px',
+                                    padding: '32px 36px',
+                                    background: 'rgba(12, 12, 20, 0.65)',
+                                    backdropFilter: 'blur(16px)',
+                                    WebkitBackdropFilter: 'blur(16px)',
+                                    border: '1px solid rgba(240, 176, 32, 0.06)',
+                                    borderRadius: '16px',
                                     position: 'relative',
+                                    overflow: 'hidden',
+                                    opacity: 0,
+                                    cursor: 'none',
+                                    willChange: 'transform, filter, opacity',
+                                    transition: 'border-color 0.5s ease, box-shadow 0.5s ease',
+                                    // Initial offset will be set by GSAP
+                                    alignSelf: isEven ? 'flex-start' : 'flex-end',
                                 }}
-                                onMouseEnter={e => {
-                                    e.currentTarget.style.background = 'var(--bg-secondary)';
-                                    e.currentTarget.style.transform = 'translateY(-6px) scale(1.02)';
-                                    e.currentTarget.style.boxShadow = '0 12px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(240,176,32,0.12)';
-                                    e.currentTarget.style.zIndex = '2';
+                                onMouseOver={e => {
+                                    e.currentTarget.style.borderColor = 'rgba(240, 176, 32, 0.18)';
+                                    e.currentTarget.style.boxShadow = '0 20px 50px rgba(0,0,0,0.4), 0 0 20px rgba(240,176,32,0.06)';
                                 }}
-                                onMouseLeave={e => {
-                                    e.currentTarget.style.background = 'var(--bg-primary)';
-                                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                                onMouseOut={e => {
+                                    e.currentTarget.style.borderColor = 'rgba(240, 176, 32, 0.06)';
                                     e.currentTarget.style.boxShadow = 'none';
-                                    e.currentTarget.style.zIndex = '1';
                                 }}
                             >
-                                {/* Index number */}
-                                <span style={{
-                                    fontFamily: "var(--font-mono)",
-                                    fontSize: '0.6rem',
-                                    fontWeight: 500,
-                                    color: 'rgba(240, 176, 32, 0.35)',
-                                    letterSpacing: '0.15em',
-                                }}>
-                                    {String(i + 1).padStart(2, '0')}
-                                </span>
+                                {/* Activation glow line */}
+                                <div
+                                    ref={el => glowLinesRef.current[i] = el}
+                                    style={{
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: 0,
+                                        right: 0,
+                                        height: '2px',
+                                        background: isEven
+                                            ? 'linear-gradient(90deg, rgba(240,176,32,0.6), rgba(240,96,32,0.3), transparent)'
+                                            : 'linear-gradient(90deg, transparent, rgba(240,96,32,0.3), rgba(240,176,32,0.6))',
+                                        transformOrigin: isEven ? 'left center' : 'right center',
+                                        transform: 'scaleX(0)',
+                                        opacity: 0,
+                                    }}
+                                />
 
-                                {/* Title */}
-                                <h3 style={{
-                                    fontFamily: "var(--font-heading)",
-                                    fontSize: '1.2rem',
-                                    fontWeight: 700,
-                                    color: 'var(--text-primary)',
-                                    lineHeight: 1.25,
-                                    letterSpacing: '-0.02em',
+                                {/* Card content */}
+                                <div style={{
+                                    display: 'flex',
+                                    alignItems: 'flex-start',
+                                    gap: '24px',
                                 }}>
-                                    {service.title}
-                                </h3>
+                                    {/* Number badge */}
+                                    <span style={{
+                                        fontFamily: 'var(--font-mono)',
+                                        fontSize: '0.7rem',
+                                        fontWeight: 600,
+                                        color: 'rgba(240, 176, 32, 0.4)',
+                                        letterSpacing: '0.1em',
+                                        minWidth: '28px',
+                                        paddingTop: '2px',
+                                    }}>
+                                        {String(i + 1).padStart(2, '0')}
+                                    </span>
 
-                                {/* Description */}
-                                <p style={{
-                                    fontFamily: "var(--font-body)",
-                                    fontSize: '0.84rem',
-                                    color: 'var(--text-secondary)',
-                                    lineHeight: 1.65,
-                                    flex: 1,
-                                }}>
-                                    {service.desc}
-                                </p>
+                                    <div style={{ flex: 1 }}>
+                                        {/* Title */}
+                                        <h3 style={{
+                                            fontFamily: 'var(--font-heading)',
+                                            fontSize: '1.2rem',
+                                            fontWeight: 700,
+                                            color: 'var(--text-primary)',
+                                            lineHeight: 1.25,
+                                            letterSpacing: '-0.02em',
+                                        }}>
+                                            {service.title}
+                                        </h3>
 
-                                {/* Stack tag */}
-                                <span style={{
-                                    fontFamily: "var(--font-mono)",
-                                    fontSize: '0.58rem',
-                                    fontWeight: 500,
-                                    color: 'var(--text-muted)',
-                                    letterSpacing: '0.06em',
-                                    paddingTop: '14px',
-                                    borderTop: '1px solid rgba(240, 176, 32, 0.05)',
-                                    marginTop: 'auto',
-                                }}>
-                                    {service.tag}
-                                </span>
+                                        {/* Description */}
+                                        <p style={{
+                                            fontFamily: 'var(--font-body)',
+                                            fontSize: '0.84rem',
+                                            color: 'var(--text-secondary)',
+                                            lineHeight: 1.65,
+                                            marginTop: '10px',
+                                        }}>
+                                            {service.desc}
+                                        </p>
+
+                                        {/* Stack tag */}
+                                        <span style={{
+                                            fontFamily: 'var(--font-mono)',
+                                            fontSize: '0.56rem',
+                                            fontWeight: 500,
+                                            color: 'var(--text-muted)',
+                                            letterSpacing: '0.06em',
+                                            display: 'block',
+                                            marginTop: '14px',
+                                            paddingTop: '12px',
+                                            borderTop: '1px solid rgba(240, 176, 32, 0.05)',
+                                        }}>
+                                            {service.tag}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                        ))}
-                    </div>
+                        );
+                    })}
                 </div>
             </div>
+
+            {/* Subtle center line — visual guide */}
+            <div style={{
+                position: 'absolute',
+                top: '280px',
+                bottom: '100px',
+                left: '50%',
+                width: '1px',
+                background: 'linear-gradient(to bottom, transparent, rgba(240,176,32,0.06) 15%, rgba(240,176,32,0.06) 85%, transparent)',
+                pointerEvents: 'none',
+                zIndex: 0,
+            }} />
+
+            {/* Ambient glow */}
+            <div style={{
+                position: 'absolute',
+                top: '40%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '500px',
+                height: '500px',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(240,176,32,0.03) 0%, transparent 70%)',
+                filter: 'blur(80px)',
+                pointerEvents: 'none',
+                zIndex: 0,
+            }} />
         </section>
     );
 }
