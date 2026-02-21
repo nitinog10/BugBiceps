@@ -4,7 +4,185 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Interactive grid + particles canvas
+// ─────────────────────────────────────────────────────────
+// SPOTLIGHT LOGO — Cinematic cursor-following reveal effect
+// Two layers:
+//   1. Base logo: ultra-low opacity, dark/muted (always visible)
+//   2. Bright logo: full brightness, masked by a radial gradient
+//      that follows the cursor with lerp interpolation
+// ─────────────────────────────────────────────────────────
+function SpotlightLogo() {
+    const containerRef = useRef(null);
+    const brightRef = useRef(null);
+    const glowRef = useRef(null);
+
+    // Lerp state — not React state to avoid re-renders at 60fps
+    const mouse = useRef({ x: 0.5, y: 0.5 }); // normalized [0..1]
+    const lerped = useRef({ x: 0.5, y: 0.5 });
+    const velocity = useRef({ x: 0, y: 0 });
+    const prevLerped = useRef({ x: 0.5, y: 0.5 });
+    const isInside = useRef(false);
+    const spotlightOpacity = useRef(0);
+
+    useEffect(() => {
+        const container = containerRef.current;
+        const bright = brightRef.current;
+        const glow = glowRef.current;
+        if (!container || !bright || !glow) return;
+
+        const LERP_SPEED = 0.08;       // Smooth lag — lower = smoother
+        const SPOTLIGHT_RADIUS = 280;   // px — soft circle radius
+        const PARALLAX_STRENGTH = 15;   // px — logo parallax shift
+        const GLOW_SIZE = 350;          // px — outer glow ring
+
+        const handleMouseMove = (e) => {
+            const rect = container.getBoundingClientRect();
+            mouse.current.x = (e.clientX - rect.left) / rect.width;
+            mouse.current.y = (e.clientY - rect.top) / rect.height;
+        };
+
+        const handleMouseEnter = () => {
+            isInside.current = true;
+        };
+
+        const handleMouseLeave = () => {
+            isInside.current = false;
+        };
+
+        container.addEventListener('mousemove', handleMouseMove);
+        container.addEventListener('mouseenter', handleMouseEnter);
+        container.addEventListener('mouseleave', handleMouseLeave);
+
+        let animId;
+        const animate = () => {
+            // Lerp position
+            lerped.current.x += (mouse.current.x - lerped.current.x) * LERP_SPEED;
+            lerped.current.y += (mouse.current.y - lerped.current.y) * LERP_SPEED;
+
+            // Calculate velocity for optional effects
+            velocity.current.x = lerped.current.x - prevLerped.current.x;
+            velocity.current.y = lerped.current.y - prevLerped.current.y;
+            prevLerped.current.x = lerped.current.x;
+            prevLerped.current.y = lerped.current.y;
+
+            // Smooth spotlight opacity transition
+            const targetOpacity = isInside.current ? 1 : 0;
+            spotlightOpacity.current += (targetOpacity - spotlightOpacity.current) * 0.06;
+
+            // Pixel positions
+            const rect = container.getBoundingClientRect();
+            const px = lerped.current.x * rect.width;
+            const py = lerped.current.y * rect.height;
+
+            // Calculate velocity-based spotlight scaling (subtle distortion)
+            const speed = Math.sqrt(velocity.current.x ** 2 + velocity.current.y ** 2);
+            const dynamicRadius = SPOTLIGHT_RADIUS + Math.min(speed * 2000, 80);
+
+            // Update bright logo mask — radial gradient following cursor
+            bright.style.maskImage = `radial-gradient(circle ${dynamicRadius}px at ${px}px ${py}px, rgba(0,0,0,${spotlightOpacity.current}) 0%, rgba(0,0,0,${spotlightOpacity.current * 0.5}) 40%, transparent 70%)`;
+            bright.style.webkitMaskImage = bright.style.maskImage;
+
+            // Update glow element
+            glow.style.left = `${px}px`;
+            glow.style.top = `${py}px`;
+            glow.style.width = `${GLOW_SIZE + speed * 3000}px`;
+            glow.style.height = `${GLOW_SIZE + speed * 3000}px`;
+            glow.style.opacity = spotlightOpacity.current * 0.55;
+
+            // Parallax shift on base logo
+            const offsetX = (lerped.current.x - 0.5) * PARALLAX_STRENGTH;
+            const offsetY = (lerped.current.y - 0.5) * PARALLAX_STRENGTH;
+            container.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+
+            animId = requestAnimationFrame(animate);
+        };
+
+        animId = requestAnimationFrame(animate);
+
+        return () => {
+            cancelAnimationFrame(animId);
+            container.removeEventListener('mousemove', handleMouseMove);
+            container.removeEventListener('mouseenter', handleMouseEnter);
+            container.removeEventListener('mouseleave', handleMouseLeave);
+        };
+    }, []);
+
+    const logoSize = 'clamp(350px, 50vw, 700px)';
+
+    return (
+        <div
+            ref={containerRef}
+            style={{
+                position: 'absolute',
+                inset: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 1,
+                pointerEvents: 'auto',
+                willChange: 'transform',
+                transition: 'transform 0.1s linear',
+            }}
+        >
+            {/* Layer 1 — Base muted logo (always visible, very dim) */}
+            <img
+                src="/logo.png"
+                alt=""
+                draggable={false}
+                style={{
+                    position: 'absolute',
+                    width: logoSize,
+                    height: 'auto',
+                    opacity: 0.04,
+                    filter: 'grayscale(80%) brightness(0.6)',
+                    pointerEvents: 'none',
+                    userSelect: 'none',
+                }}
+            />
+
+            {/* Layer 2 — Bright logo (masked by spotlight) */}
+            <img
+                ref={brightRef}
+                src="/logo.png"
+                alt=""
+                draggable={false}
+                style={{
+                    position: 'absolute',
+                    width: logoSize,
+                    height: 'auto',
+                    opacity: 0.35,
+                    filter: 'brightness(1.1) saturate(1.2)',
+                    pointerEvents: 'none',
+                    userSelect: 'none',
+                    maskImage: 'radial-gradient(circle 280px at 50% 50%, transparent 0%, transparent 100%)',
+                    WebkitMaskImage: 'radial-gradient(circle 280px at 50% 50%, transparent 0%, transparent 100%)',
+                    willChange: 'mask-image, -webkit-mask-image',
+                }}
+            />
+
+            {/* Glow orb — follows cursor, creates ambient light feel */}
+            <div
+                ref={glowRef}
+                style={{
+                    position: 'absolute',
+                    width: '350px',
+                    height: '350px',
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle, rgba(240,176,32,0.12) 0%, rgba(240,96,32,0.05) 40%, transparent 70%)',
+                    transform: 'translate(-50%, -50%)',
+                    pointerEvents: 'none',
+                    filter: 'blur(30px)',
+                    opacity: 0,
+                    willChange: 'left, top, opacity, width, height',
+                }}
+            />
+        </div>
+    );
+}
+
+// ─────────────────────────────────────────────────────────
+// INTERACTIVE DOT GRID CANVAS
+// ─────────────────────────────────────────────────────────
 function HeroCanvas() {
     const canvasRef = useRef(null);
 
@@ -21,17 +199,16 @@ function HeroCanvas() {
         resize();
         window.addEventListener('resize', resize);
 
-        // Subtle dot grid
+        // Subtle dot grid that reacts to mouse
         const drawGrid = () => {
             const gap = 80;
-            ctx.fillStyle = 'rgba(240, 176, 32, 0.04)';
             for (let x = gap; x < w; x += gap) {
                 for (let y = gap; y < h; y += gap) {
                     const dx = mouse.x - x;
                     const dy = mouse.y - y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
                     const scale = dist < 200 ? 1 + (1 - dist / 200) * 2 : 1;
-                    const alpha = dist < 200 ? 0.04 + (1 - dist / 200) * 0.12 : 0.04;
+                    const alpha = dist < 200 ? 0.03 + (1 - dist / 200) * 0.08 : 0.03;
                     ctx.fillStyle = `rgba(240, 176, 32, ${alpha})`;
                     ctx.beginPath();
                     ctx.arc(x, y, scale, 0, Math.PI * 2);
@@ -41,13 +218,13 @@ function HeroCanvas() {
         };
 
         // Floating particles
-        particles = Array.from({ length: 35 }, () => ({
+        particles = Array.from({ length: 25 }, () => ({
             x: Math.random() * w,
             y: Math.random() * h,
-            size: Math.random() * 1.5 + 0.5,
-            speedX: (Math.random() - 0.5) * 0.2,
-            speedY: (Math.random() - 0.5) * 0.2,
-            opacity: Math.random() * 0.4 + 0.1,
+            size: Math.random() * 1.2 + 0.4,
+            speedX: (Math.random() - 0.5) * 0.15,
+            speedY: (Math.random() - 0.5) * 0.15,
+            opacity: Math.random() * 0.3 + 0.05,
         }));
 
         const onMouseMove = (e) => {
@@ -62,20 +239,18 @@ function HeroCanvas() {
             drawGrid();
 
             particles.forEach((p, i) => {
-                // Connections near mouse
                 const dx = mouse.x - p.x;
                 const dy = mouse.y - p.y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 180) {
+                if (dist < 160) {
                     ctx.beginPath();
                     ctx.moveTo(p.x, p.y);
                     ctx.lineTo(mouse.x, mouse.y);
-                    ctx.strokeStyle = `rgba(240, 176, 32, ${(1 - dist / 180) * 0.12})`;
-                    ctx.lineWidth = 0.5;
+                    ctx.strokeStyle = `rgba(240, 176, 32, ${(1 - dist / 160) * 0.08})`;
+                    ctx.lineWidth = 0.4;
                     ctx.stroke();
                 }
 
-                // Inter-particle connections
                 for (let j = i + 1; j < particles.length; j++) {
                     const p2 = particles[j];
                     const d = Math.hypot(p2.x - p.x, p2.y - p.y);
@@ -83,7 +258,7 @@ function HeroCanvas() {
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(240, 176, 32, ${(1 - d / 100) * 0.06})`;
+                        ctx.strokeStyle = `rgba(240, 176, 32, ${(1 - d / 100) * 0.04})`;
                         ctx.lineWidth = 0.3;
                         ctx.stroke();
                     }
@@ -119,11 +294,14 @@ function HeroCanvas() {
             inset: 0,
             width: '100%',
             height: '100%',
-            zIndex: 1,
+            zIndex: 0,
         }} />
     );
 }
 
+// ─────────────────────────────────────────────────────────
+// HERO SECTION
+// ─────────────────────────────────────────────────────────
 export default function Hero() {
     const sectionRef = useRef(null);
     const headingRef = useRef(null);
@@ -142,21 +320,21 @@ export default function Hero() {
                 { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: 'expo.out' }
             );
 
-            // Heading — line reveal
+            // Heading — line reveal with 3D
             tl.fromTo(headingRef.current?.querySelectorAll('.hero-line') || [],
                 { y: 120, opacity: 0, rotateX: -20 },
                 { y: 0, opacity: 1, rotateX: 0, duration: 1.4, stagger: 0.15, ease: 'expo.out' },
                 '-=0.4'
             );
 
-            // Subtitle area
+            // Subtitle
             tl.fromTo(subRef.current,
                 { y: 40, opacity: 0 },
                 { y: 0, opacity: 1, duration: 0.8, ease: 'expo.out' },
                 '-=0.8'
             );
 
-            // CTA buttons
+            // CTA
             tl.fromTo(ctaRef.current,
                 { y: 30, opacity: 0 },
                 { y: 0, opacity: 1, duration: 0.6, ease: 'expo.out' },
@@ -170,7 +348,7 @@ export default function Hero() {
                 '-=0.3'
             );
 
-            // Parallax on scroll
+            // Parallax out on scroll
             gsap.to(headingRef.current, {
                 y: -150,
                 opacity: 0,
@@ -200,6 +378,7 @@ export default function Hero() {
             padding: '0 clamp(24px, 5vw, 80px)',
             background: 'var(--bg-primary)',
         }}>
+            {/* Canvas grid layer */}
             <HeroCanvas />
 
             {/* Gradient blobs */}
@@ -212,7 +391,7 @@ export default function Hero() {
                 maxWidth: '700px',
                 maxHeight: '700px',
                 borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(240,176,32,0.12) 0%, rgba(240,96,32,0.04) 40%, transparent 70%)',
+                background: 'radial-gradient(circle, rgba(240,176,32,0.10) 0%, rgba(240,96,32,0.03) 40%, transparent 70%)',
                 filter: 'blur(80px)',
                 animation: 'pulse-glow 10s ease-in-out infinite',
                 pointerEvents: 'none',
@@ -227,7 +406,7 @@ export default function Hero() {
                 maxWidth: '600px',
                 maxHeight: '600px',
                 borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(232,48,48,0.08) 0%, rgba(240,96,32,0.03) 40%, transparent 70%)',
+                background: 'radial-gradient(circle, rgba(232,48,48,0.06) 0%, rgba(240,96,32,0.02) 40%, transparent 70%)',
                 filter: 'blur(80px)',
                 animation: 'pulse-glow 12s ease-in-out infinite',
                 animationDelay: '5s',
@@ -235,16 +414,8 @@ export default function Hero() {
                 zIndex: 0,
             }} />
 
-            {/* Logo watermark */}
-            <img src="/logo.png" alt="" style={{
-                position: 'absolute',
-                width: 'clamp(300px, 35vw, 600px)',
-                height: 'auto',
-                opacity: 0.02,
-                pointerEvents: 'none',
-                filter: 'grayscale(100%)',
-                zIndex: 1,
-            }} />
+            {/* ★ SPOTLIGHT LOGO — Cinematic cursor interaction ★ */}
+            <SpotlightLogo />
 
             {/* Badge */}
             <div ref={badgeRef} style={{
@@ -330,17 +501,16 @@ export default function Hero() {
                     color: 'var(--text-secondary)',
                     lineHeight: 1.8,
                 }}>
-                    AI systems, scalable platforms, and automation engines — crafted by
-                    engineers who think in architecture, not templates.
+                    Web • Mobile • AI Systems • Automation • SEO • Graphic & 3D
                 </p>
                 <div style={{
                     display: 'flex',
                     justifyContent: 'center',
                     gap: '8px',
-                    marginTop: '28px',
+                    marginTop: '24px',
                     flexWrap: 'wrap',
                 }}>
-                    {services.map((item, i) => (
+                    {services.map((item) => (
                         <span key={item} style={{
                             fontFamily: "'JetBrains Mono', monospace",
                             fontSize: '0.68rem',
