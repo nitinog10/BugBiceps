@@ -210,7 +210,7 @@ export default function Contact() {
 
                         {/* Email */}
                         <a
-                            href="mailto:bugbiceps@gmail.com"
+                            href="mailto:admin@bugbiceps.in"
                             className="contact-reveal"
                             style={{
                                 display: 'flex',
@@ -253,7 +253,7 @@ export default function Contact() {
                                     fontSize: '0.9rem',
                                     color: 'var(--text-primary)',
                                     fontWeight: 500,
-                                }}>bugbiceps@gmail.com</span>
+                                }}>admin@bugbiceps.in</span>
                             </div>
                         </a>
 

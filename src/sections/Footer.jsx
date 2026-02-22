@@ -150,7 +150,7 @@ export default function Footer() {
                                 gap: '14px',
                             }}>
                                 {/* Email */}
-                                <a href="mailto:bugbiceps@gmail.com" style={{
+                                <a href="mailto:admin@bugbiceps.in" style={{
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: '10px',
@@ -174,7 +174,7 @@ export default function Footer() {
                                         color: 'rgba(240,176,32,0.7)',
                                         transition: 'color 0.3s ease',
                                     }} />
-                                    bugbiceps@gmail.com
+                                    admin@bugbiceps.in
                                 </a>
 
                                 {/* Phone */}
