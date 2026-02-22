@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { FaLinkedin, FaPhone, FaEnvelope } from 'react-icons/fa';
 import MagneticButton from '../components/MagneticButton';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -193,6 +194,123 @@ export default function Contact() {
                         </MagneticButton>
                     </div>
                 </form>
+
+                {/* Contact Info Section */}
+                <div style={{
+                    marginTop: '80px',
+                    paddingTop: '60px',
+                    borderTop: '1px solid rgba(240, 176, 32, 0.1)',
+                    textAlign: 'center',
+                }}>
+                    <p style={{
+                        fontFamily: "'Plus Jakarta Sans', sans-serif",
+                        fontSize: '0.9rem',
+                        color: 'var(--text-secondary)',
+                        marginBottom: '32px',
+                        letterSpacing: '0.01em',
+                    }}>
+                        Or reach out directly
+                    </p>
+
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        gap: '48px',
+                        flexWrap: 'wrap',
+                    }}>
+                        {/* Email */}
+                        <div className="contact-reveal" style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '12px',
+                            opacity: 0,
+                        }}>
+                            <FaEnvelope style={{
+                                fontSize: '20px',
+                                background: 'linear-gradient(135deg, #F0B020, #F06020)',
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                            }} />
+                            <a
+                                href="mailto:bugbiceps@gmail.com"
+                                style={{
+                                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                                    fontSize: '0.95rem',
+                                    color: 'var(--text-primary)',
+                                    textDecoration: 'none',
+                                    transition: 'color 0.3s ease',
+                                    fontWeight: 500,
+                                }}
+                                onMouseEnter={e => e.currentTarget.style.color = '#F0B020'}
+                                onMouseLeave={e => e.currentTarget.style.color = 'var(--text-primary)'}
+                            >
+                                bugbiceps@gmail.com
+                            </a>
+                        </div>
+
+                        {/* Phone */}
+                        <div className="contact-reveal" style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '12px',
+                            opacity: 0,
+                        }}>
+                            <FaPhone style={{
+                                fontSize: '20px',
+                                background: 'linear-gradient(135deg, #F0B020, #F06020)',
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                            }} />
+                            <a
+                                href="tel:+919617214679"
+                                style={{
+                                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                                    fontSize: '0.95rem',
+                                    color: 'var(--text-primary)',
+                                    textDecoration: 'none',
+                                    transition: 'color 0.3s ease',
+                                    fontWeight: 500,
+                                }}
+                                onMouseEnter={e => e.currentTarget.style.color = '#F0B020'}
+                                onMouseLeave={e => e.currentTarget.style.color = 'var(--text-primary)'}
+                            >
+                                +91 9617214679
+                            </a>
+                        </div>
+
+                        {/* LinkedIn */}
+                        <div className="contact-reveal" style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '12px',
+                            opacity: 0,
+                        }}>
+                            <FaLinkedin style={{
+                                fontSize: '20px',
+                                background: 'linear-gradient(135deg, #F0B020, #F06020)',
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                            }} />
+                            <a
+                                href="https://www.linkedin.com/company/bugbiceps/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                                    fontSize: '0.95rem',
+                                    color: 'var(--text-primary)',
+                                    textDecoration: 'none',
+                                    transition: 'color 0.3s ease',
+                                    fontWeight: 500,
+                                }}
+                                onMouseEnter={e => e.currentTarget.style.color = '#F0B020'}
+                                onMouseLeave={e => e.currentTarget.style.color = 'var(--text-primary)'}
+                            >
+                                LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     );

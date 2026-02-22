@@ -1,3 +1,5 @@
+import { FaLinkedin, FaPhone, FaEnvelope } from 'react-icons/fa';
+
 export default function Footer() {
     const currentYear = new Date().getFullYear();
 
@@ -142,26 +144,95 @@ export default function Footer() {
                                 textTransform: 'uppercase',
                                 marginBottom: '20px',
                             }}>Connect</h4>
-                            {[
-                                { label: 'Email', href: 'mailto:hello@bugbiceps.com' },
-                                { label: 'LinkedIn', href: '#' },
-                                { label: 'Twitter / X', href: '#' },
-                                { label: 'GitHub', href: '#' },
-                            ].map(link => (
-                                <a key={link.label} href={link.href} style={{
-                                    display: 'block',
+                            <div style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '14px',
+                            }}>
+                                {/* Email */}
+                                <a href="mailto:bugbiceps@gmail.com" style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '10px',
                                     fontFamily: "'Plus Jakarta Sans', sans-serif",
                                     fontSize: '0.85rem',
                                     color: 'var(--text-secondary)',
-                                    marginBottom: '12px',
+                                    textDecoration: 'none',
                                     transition: 'color 0.3s ease',
                                 }}
-                                    onMouseEnter={e => e.target.style.color = '#F0B020'}
-                                    onMouseLeave={e => e.target.style.color = 'var(--text-secondary)'}
+                                    onMouseEnter={e => {
+                                        e.currentTarget.style.color = '#F0B020';
+                                        e.currentTarget.querySelector('svg').style.color = '#F0B020';
+                                    }}
+                                    onMouseLeave={e => {
+                                        e.currentTarget.style.color = 'var(--text-secondary)';
+                                        e.currentTarget.querySelector('svg').style.color = 'rgba(240,176,32,0.7)';
+                                    }}
                                 >
-                                    {link.label}
+                                    <FaEnvelope style={{
+                                        fontSize: '14px',
+                                        color: 'rgba(240,176,32,0.7)',
+                                        transition: 'color 0.3s ease',
+                                    }} />
+                                    bugbiceps@gmail.com
                                 </a>
-                            ))}
+
+                                {/* Phone */}
+                                <a href="tel:+919617214679" style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '10px',
+                                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                                    fontSize: '0.85rem',
+                                    color: 'var(--text-secondary)',
+                                    textDecoration: 'none',
+                                    transition: 'color 0.3s ease',
+                                }}
+                                    onMouseEnter={e => {
+                                        e.currentTarget.style.color = '#F0B020';
+                                        e.currentTarget.querySelector('svg').style.color = '#F0B020';
+                                    }}
+                                    onMouseLeave={e => {
+                                        e.currentTarget.style.color = 'var(--text-secondary)';
+                                        e.currentTarget.querySelector('svg').style.color = 'rgba(240,176,32,0.7)';
+                                    }}
+                                >
+                                    <FaPhone style={{
+                                        fontSize: '14px',
+                                        color: 'rgba(240,176,32,0.7)',
+                                        transition: 'color 0.3s ease',
+                                    }} />
+                                    +91 9617214679
+                                </a>
+
+                                {/* LinkedIn */}
+                                <a href="https://www.linkedin.com/company/bugbiceps/" target="_blank" rel="noopener noreferrer" style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '10px',
+                                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                                    fontSize: '0.85rem',
+                                    color: 'var(--text-secondary)',
+                                    textDecoration: 'none',
+                                    transition: 'color 0.3s ease',
+                                }}
+                                    onMouseEnter={e => {
+                                        e.currentTarget.style.color = '#F0B020';
+                                        e.currentTarget.querySelector('svg').style.color = '#F0B020';
+                                    }}
+                                    onMouseLeave={e => {
+                                        e.currentTarget.style.color = 'var(--text-secondary)';
+                                        e.currentTarget.querySelector('svg').style.color = 'rgba(240,176,32,0.7)';
+                                    }}
+                                >
+                                    <FaLinkedin style={{
+                                        fontSize: '14px',
+                                        color: 'rgba(240,176,32,0.7)',
+                                        transition: 'color 0.3s ease',
+                                    }} />
+                                    LinkedIn
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
