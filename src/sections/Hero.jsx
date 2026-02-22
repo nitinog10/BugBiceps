@@ -553,6 +553,19 @@ export default function Hero() {
                         We Flex Code Until Bugs Break
                     </span>
                 </div>
+
+                {/* Tagline */}
+                <div className="hero-line" style={{
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                    fontSize: 'clamp(0.9rem, 1.5vw, 1.2rem)',
+                    fontWeight: 600,
+                    letterSpacing: '0.02em',
+                    marginTop: '18px',
+                    opacity: 0,
+                    color: 'rgba(240, 176, 32, 0.85)',
+                }}>
+                    Automate Web Workflows • Educate Tech Leaders • Build Scalable Systems
+                </div>
             </div>
 
             {/* Subtitle + service tags */}
