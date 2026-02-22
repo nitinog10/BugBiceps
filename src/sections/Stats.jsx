@@ -5,9 +5,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
-    { value: 150, suffix: '+', label: 'Projects Delivered', sub: 'Across 12 industries' },
-    { value: 40, suffix: '+', label: 'AI Systems Deployed', sub: 'Production-grade models' },
-    { value: 500, suffix: 'K+', label: 'Lines of Code Generated', sub: 'Clean, maintainable code' },
+    { value: 20, suffix: '+', label: 'Projects Delivered', sub: 'Across 12 industries' },
+    { value: 10, suffix: '+', label: 'AI Systems Deployed', sub: 'Production-grade models' },
+    { value: 100, suffix: 'K+', label: 'Lines of Code Generated', sub: 'Clean, maintainable code' },
     { value: 99, suffix: '%', label: 'Client Satisfaction', sub: 'Long-term partnerships' },
 ];
 
