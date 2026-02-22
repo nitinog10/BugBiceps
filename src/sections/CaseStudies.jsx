@@ -2,9 +2,9 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { 
-    FaPython, FaReact, FaNode, FaDatabase, FaClock, FaRobot, FaLink
+    FaPython, FaReact, FaNode, FaDatabase, FaClock, FaRobot, FaLink, FaShoppingCart, FaGraduationCap
 } from 'react-icons/fa';
-import { SiPostgresql, SiVuedotjs, SiNextdotjs } from 'react-icons/si';
+import { SiPostgresql, SiVuedotjs, SiNextdotjs, SiMongodb, SiTailwindcss, SiStripe, SiFirebase } from 'react-icons/si';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,17 +23,38 @@ const getTechIcon = (tech) => {
         'Temporal': FaClock,
         'PostgreSQL': SiPostgresql,
         'Vue': SiVuedotjs,
+        'MongoDB': SiMongodb,
+        'Tailwind CSS': SiTailwindcss,
+        'Stripe': SiStripe,
+        'Firebase': SiFirebase,
     };
     return iconMap[tech] || null;
 };
 
 const projects = [
     {
-        title: 'Neural Commerce Engine',
-        category: 'AI · E-Commerce',
-        desc: 'AI-powered recommendation system processing 2M+ queries daily with sub-100ms latency. Built with custom embeddings and real-time inference pipeline.',
-        tech: ['PyTorch', 'FastAPI', 'Redis', 'React'],
-        metric: '2M+ queries/day',
+        title: 'EntopLearning.com',
+        category: 'EdTech · LMS',
+        desc: 'A full-featured learning management system with course management, student dashboards, progress tracking, and interactive content delivery.',
+        tech: ['React', 'Node.js', 'MongoDB', 'Firebase'],
+        metric: 'Live Platform',
+        link: 'https://entoplearning.com',
+    },
+    {
+        title: 'Fizinga.in',
+        category: 'E-Commerce · Health',
+        desc: 'E-commerce brand selling nutrition supplements and protein tablets with seamless checkout, product catalog, and order management.',
+        tech: ['Next.js', 'Tailwind CSS', 'Stripe', 'MongoDB'],
+        metric: 'Live Store',
+        link: 'https://fizinga.in',
+    },
+    {
+        title: 'GuruParampara.in',
+        category: 'Healthcare · Events',
+        desc: 'A platform built for Ayurvedic doctors to manage events, workshops, and community engagement. Features event scheduling, registrations, and doctor profiles.',
+        tech: ['React', 'Node.js', 'MongoDB', 'Firebase'],
+        metric: 'Live Platform',
+        link: 'https://guruparampara.in',
     },
     {
         title: 'FinBot Pro',
@@ -43,11 +64,11 @@ const projects = [
         metric: '95% accuracy',
     },
     {
-        title: 'AutoScale Platform',
-        category: 'Automation · SaaS',
-        desc: 'End-to-end business automation platform reducing manual workflows by 94%. Handles 50K+ daily task orchestrations.',
-        tech: ['Node.js', 'Temporal', 'PostgreSQL', 'Vue'],
-        metric: '94% reduction',
+        title: 'AtmoPredict',
+        category: 'AI · Weather',
+        desc: 'AI-powered weather prediction system delivering accurate forecasts using machine learning models and real-time atmospheric data analysis.',
+        tech: ['PyTorch', 'FastAPI', 'React', 'PostgreSQL'],
+        metric: 'AI Powered',
     },
 ];
 
@@ -203,7 +224,7 @@ export default function CaseStudies() {
                                 alignItems: 'center',
                                 justifyContent: isLeft ? 'flex-start' : 'flex-end',
                                 position: 'relative',
-                                marginBottom: '48px',
+                                marginBottom: '32px',
                             }}>
                                 {/* Timeline dot */}
                                 <div
@@ -241,7 +262,7 @@ export default function CaseStudies() {
                                     onMouseLeave={() => handleMouseLeave(cardsRef.current[i])}
                                     style={{
                                         width: 'calc(50% - 60px)',
-                                        padding: '36px 36px',
+                                        padding: '24px 24px',
                                         background: 'rgba(12, 12, 20, 0.65)',
                                         backdropFilter: 'blur(16px)',
                                         WebkitBackdropFilter: 'blur(16px)',
@@ -279,8 +300,8 @@ export default function CaseStudies() {
                                     <div style={{
                                         display: 'flex',
                                         alignItems: 'center',
-                                        gap: '12px',
-                                        marginBottom: '14px',
+                                        gap: '10px',
+                                        marginBottom: '10px',
                                         flexWrap: 'wrap',
                                     }}>
                                         <span style={{
@@ -306,7 +327,7 @@ export default function CaseStudies() {
                                     {/* Title */}
                                     <h3 style={{
                                         fontFamily: 'var(--font-heading)',
-                                        fontSize: '1.3rem',
+                                        fontSize: '1.1rem',
                                         fontWeight: 800,
                                         color: 'var(--text-primary)',
                                         letterSpacing: '-0.02em',
@@ -316,19 +337,19 @@ export default function CaseStudies() {
                                     {/* Description */}
                                     <p style={{
                                         fontFamily: 'var(--font-body)',
-                                        fontSize: '0.84rem',
+                                        fontSize: '0.78rem',
                                         color: 'var(--text-secondary)',
-                                        marginTop: '12px',
-                                        lineHeight: 1.65,
+                                        marginTop: '8px',
+                                        lineHeight: 1.6,
                                     }}>{project.desc}</p>
 
                                     {/* Tech stack */}
                                     <div style={{
                                         display: 'flex',
-                                        gap: '6px',
-                                        marginTop: '18px',
+                                        gap: '5px',
+                                        marginTop: '12px',
                                         flexWrap: 'wrap',
-                                        marginBottom: '12px',
+                                        marginBottom: '8px',
                                     }}>
                                         {project.tech.map(t => (
                                             <span key={t} style={{
@@ -348,9 +369,9 @@ export default function CaseStudies() {
                                     {/* Tech icons */}
                                     <div style={{
                                         display: 'flex',
-                                        gap: '10px',
-                                        marginBottom: '12px',
-                                        paddingBottom: '12px',
+                                        gap: '8px',
+                                        marginBottom: '8px',
+                                        paddingBottom: '8px',
                                         borderBottom: '1px solid rgba(240, 176, 32, 0.05)',
                                     }}>
                                         {project.tech.map(t => {
@@ -370,12 +391,12 @@ export default function CaseStudies() {
                                     </div>
 
                                     {/* View link */}
-                                    <div style={{
+                                    <a href={project.link || '#'} target={project.link ? '_blank' : '_self'} rel="noopener noreferrer" style={{
                                         display: 'flex',
                                         alignItems: 'center',
                                         gap: '8px',
-                                        marginTop: '20px',
-                                        paddingTop: '16px',
+                                        marginTop: '12px',
+                                        paddingTop: '10px',
                                         borderTop: '1px solid rgba(240,176,32,0.05)',
                                         color: 'var(--gold)',
                                         fontFamily: 'var(--font-body)',
@@ -387,7 +408,7 @@ export default function CaseStudies() {
                                         onMouseLeave={e => e.currentTarget.style.gap = '8px'}
                                     >
                                         View Project <span style={{ fontSize: '1rem' }}>→</span>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                         );
