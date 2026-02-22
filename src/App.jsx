@@ -14,6 +14,7 @@ import AIShowcase from './sections/AIShowcase';
 import CaseStudies from './sections/CaseStudies';
 import Philosophy from './sections/Philosophy';
 import Education from './sections/Education';
+import Testimonials from './sections/Testimonials';
 import Stats from './sections/Stats';
 import Contact from './sections/Contact';
 import Footer from './sections/Footer';
@@ -115,6 +116,7 @@ function App() {
                         <div className="section-divider" />
                         <CaseStudies />
                         <Philosophy />
+                        <Testimonials />
                         <Stats />
                         <Contact />
                     </main>
