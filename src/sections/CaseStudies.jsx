@@ -202,10 +202,10 @@ export default function CaseStudies() {
                 </div>
 
                 {/* ── Timeline zigzag layout ── */}
-                <div style={{ position: 'relative' }}>
+                <div className="cases-timeline" style={{ position: 'relative' }}>
 
                     {/* Center spine line */}
-                    <div style={{
+                    <div className="timeline-spine" style={{
                         position: 'absolute',
                         top: 0,
                         bottom: 0,
@@ -219,7 +219,7 @@ export default function CaseStudies() {
                         const isLeft = i % 2 === 0;
 
                         return (
-                            <div key={project.title} style={{
+                            <div key={project.title} className="case-row" style={{
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: isLeft ? 'flex-start' : 'flex-end',
@@ -228,6 +228,7 @@ export default function CaseStudies() {
                             }}>
                                 {/* Timeline dot */}
                                 <div
+                                    className="timeline-dot"
                                     ref={el => dotsRef.current[i] = el}
                                     style={{
                                         position: 'absolute',
@@ -244,7 +245,7 @@ export default function CaseStudies() {
                                 />
 
                                 {/* Connector line */}
-                                <div style={{
+                                <div className="timeline-connector" style={{
                                     position: 'absolute',
                                     top: '50%',
                                     left: isLeft ? 'calc(50% - 40px)' : '50%',
@@ -256,6 +257,7 @@ export default function CaseStudies() {
 
                                 {/* Card */}
                                 <div
+                                    className="case-card"
                                     ref={el => cardsRef.current[i] = el}
                                     data-cursor-hover
                                     onMouseEnter={() => handleMouseEnter(cardsRef.current[i])}
@@ -415,6 +417,22 @@ export default function CaseStudies() {
                     })}
                 </div>
             </div>
+
+            <style>{`
+                @media (max-width: 768px) {
+                    .cases-timeline .timeline-spine,
+                    .cases-timeline .timeline-dot,
+                    .cases-timeline .timeline-connector {
+                        display: none !important;
+                    }
+                    .cases-timeline .case-row {
+                        justify-content: center !important;
+                    }
+                    .cases-timeline .case-card {
+                        width: 100% !important;
+                    }
+                }
+            `}</style>
         </section>
     );
 }

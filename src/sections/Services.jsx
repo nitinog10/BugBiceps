@@ -209,10 +209,10 @@ export default function Services() {
                 </div>
 
                 {/* ── Timeline zigzag layout ── */}
-                <div style={{ position: 'relative' }}>
+                <div className="services-timeline" style={{ position: 'relative' }}>
 
                     {/* Center spine line */}
-                    <div style={{
+                    <div className="timeline-spine" style={{
                         position: 'absolute',
                         top: 0,
                         bottom: 0,
@@ -227,7 +227,7 @@ export default function Services() {
                         const isLeft = i % 2 === 0;
 
                         return (
-                            <div key={service.title} style={{
+                            <div key={service.title} className="service-row" style={{
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: isLeft ? 'flex-start' : 'flex-end',
@@ -236,6 +236,7 @@ export default function Services() {
                             }}>
                                 {/* Timeline dot on the center line */}
                                 <div
+                                    className="timeline-dot"
                                     ref={el => dotsRef.current[i] = el}
                                     style={{
                                         position: 'absolute',
@@ -252,7 +253,7 @@ export default function Services() {
                                 />
 
                                 {/* Connector line from dot to card */}
-                                <div style={{
+                                <div className="timeline-connector" style={{
                                     position: 'absolute',
                                     top: '50%',
                                     left: isLeft ? 'calc(50% - 40px)' : '50%',
@@ -264,6 +265,7 @@ export default function Services() {
 
                                 {/* Card */}
                                 <div
+                                    className="service-card"
                                     ref={el => cardsRef.current[i] = el}
                                     data-cursor-hover
                                     onMouseEnter={() => handleMouseEnter(cardsRef.current[i])}
@@ -380,6 +382,22 @@ export default function Services() {
                     })}
                 </div>
             </div>
+            <style>{`
+                @media (max-width: 768px) {
+                    .services-timeline .timeline-spine,
+                    .services-timeline .timeline-dot,
+                    .services-timeline .timeline-connector {
+                        display: none !important;
+                    }
+                    .services-timeline .service-row {
+                        justify-content: center !important;
+                    }
+                    .services-timeline .service-card {
+                        width: 100% !important;
+                        padding: 20px 18px !important;
+                    }
+                }
+            `}</style>
         </section>
     );
 }

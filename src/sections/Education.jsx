@@ -57,9 +57,9 @@ export default function Education() {
                 padding: '0 clamp(24px, 5vw, 80px)',
             }}>
                 {/* Two-column layout */}
-                <div style={{
+                <div className="edu-grid" style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
                     gap: '60px',
                     alignItems: 'start',
                 }}>
@@ -232,6 +232,15 @@ export default function Education() {
                 height: '1px',
                 background: 'linear-gradient(90deg, transparent, rgba(240,176,32,0.2), transparent)',
             }} />
+
+            <style>{`
+                @media (max-width: 600px) {
+                    .edu-grid {
+                        grid-template-columns: 1fr !important;
+                        gap: 36px !important;
+                    }
+                }
+            `}</style>
         </section>
     );
 }

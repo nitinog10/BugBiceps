@@ -201,7 +201,7 @@ export default function AIShowcase() {
                     </div>
                 </div>
 
-                <div style={{
+                <div className="ai-capabilities-grid" style={{
                     display: 'grid',
                     gridTemplateColumns: '1fr 1fr',
                     gap: '16px',
@@ -258,6 +258,7 @@ export default function AIShowcase() {
             <style>{`
                 @media (max-width: 768px) {
                     .ai-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+                    .ai-capabilities-grid { grid-template-columns: 1fr !important; }
                 }
             `}</style>
         </section>

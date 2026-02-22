@@ -140,6 +140,14 @@ export default function Stats() {
                 </div>
             </div>
 
+            <style>{`
+                @media (max-width: 600px) {
+                    .stat-card {
+                        padding: 28px 20px !important;
+                    }
+                }
+            `}</style>
+
             {/* Bottom line */}
             <div style={{
                 position: 'absolute',

@@ -216,7 +216,7 @@ export default function Technologies() {
             </div>
 
             {/* Tech grids container */}
-            <div style={{
+            <div className="tech-grid-container" style={{
                 width: '100%',
                 maxWidth: '1200px',
                 display: 'grid',
