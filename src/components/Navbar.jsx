@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { handleSmoothScroll } from '../utils/navigationUtils';
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
@@ -12,7 +13,6 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
-    // Animate nav entrance after preloader
     useEffect(() => {
         gsap.fromTo(navRef.current,
             { y: -80, opacity: 0 },
@@ -27,17 +27,6 @@ export default function Navbar() {
         { label: 'About', href: '#about' },
         { label: 'Contact', href: '#contact' },
     ];
-
-    const handleSmoothScroll = (e, href) => {
-        e.preventDefault();
-        const target = document.querySelector(href);
-        if (target) {
-            const offset = 80;
-            const top = target.getBoundingClientRect().top + window.scrollY - offset;
-            window.scrollTo({ top, behavior: 'smooth' });
-        }
-        setMenuOpen(false);
-    };
 
     return (
         <nav ref={navRef} id="main-nav" style={{
@@ -58,7 +47,6 @@ export default function Navbar() {
             borderBottom: scrolled ? '1px solid rgba(240, 176, 32, 0.06)' : '1px solid transparent',
             opacity: 0,
         }}>
-            {/* Logo */}
             <a href="#home" onClick={(e) => handleSmoothScroll(e, '#home')}
                 style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <img src="/logo.png" alt="BugBiceps" style={{
@@ -77,7 +65,6 @@ export default function Navbar() {
                 </span>
             </a>
 
-            {/* Desktop Links */}
             <div style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -132,7 +119,6 @@ export default function Navbar() {
                 </a>
             </div>
 
-            {/* Mobile Hamburger */}
             <button
                 id="mobile-menu-toggle"
                 className="mobile-menu-btn"
@@ -167,7 +153,6 @@ export default function Navbar() {
                 }} />
             </button>
 
-            {/* Mobile Menu */}
             <div style={{
                 position: 'fixed',
                 top: 0,
