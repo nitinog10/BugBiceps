@@ -95,3 +95,17 @@ All rights reserved.
 ## Author
 
 BugBiceps Team
+
+## Code Improvements Summary
+
+- **Regression Tests Added**
+  - Implemented regression tests for high-risk components to ensure stability:
+    - `src/components/MagneticButton.jsx`
+    - `src/components/CustomCursor.jsx`
+    - `src/components/Navbar.jsx`
+
+- **Code Refactoring**
+  - Initiated extraction of shared utility code into a dedicated module to reduce code coupling and improve maintainability.
+
+- **Documentation Updates**
+  - Re-indexed and regenerated walkthroughs and diagrams following structural changes to maintain up-to-date documentation.
