@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useMousePosition, useInteractiveListeners } from '../utils/cursorUtils';
 
 export default function CustomCursor() {
     const cursorRef = useRef(null);
@@ -9,67 +10,31 @@ export default function CustomCursor() {
         const follower = followerRef.current;
         if (!cursor || !follower) return;
 
-        let mouseX = -100, mouseY = -100;
+        const { mouseX, mouseY } = useMousePosition();
         let cursorX = -100, cursorY = -100;
         let followerX = -100, followerY = -100;
-        let isHovering = false;
-
-        const onMouseMove = (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        };
-
-        const onMouseEnterInteractive = () => {
-            isHovering = true;
-            cursor.style.transform = 'translate(-50%, -50%) scale(0)';
-            follower.style.width = '50px';
-            follower.style.height = '50px';
-            follower.style.borderColor = 'rgba(240, 176, 32, 0.5)';
-            follower.style.background = 'rgba(240, 176, 32, 0.05)';
-        };
-
-        const onMouseLeaveInteractive = () => {
-            isHovering = false;
-            cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-            follower.style.width = '32px';
-            follower.style.height = '32px';
-            follower.style.borderColor = 'rgba(240, 176, 32, 0.2)';
-            follower.style.background = 'transparent';
-        };
 
         const animate = () => {
-            cursorX += (mouseX - cursorX) * 0.25;
-            cursorY += (mouseY - cursorY) * 0.25;
-            followerX += (mouseX - followerX) * 0.1;
-            followerY += (mouseY - followerY) * 0.1;
+            cursorX += (mouseX.current - cursorX) * 0.25;
+            cursorY += (mouseY.current - cursorY) * 0.25;
+            followerX += (mouseX.current - followerX) * 0.1;
+            followerY += (mouseY.current - followerY) * 0.1;
 
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-            follower.style.left = followerX + 'px';
-            follower.style.top = followerY + 'px';
+            cursor.style.left = `${cursorX}px`;
+            cursor.style.top = `${cursorY}px`;
+            follower.style.left = `${followerX}px`;
+            follower.style.top = `${followerY}px`;
 
             requestAnimationFrame(animate);
         };
 
-        document.addEventListener('mousemove', onMouseMove);
         animate();
 
-        const attachListeners = () => {
-            const interactiveEls = document.querySelectorAll('a, button, input, textarea, [data-cursor-hover]');
-            interactiveEls.forEach(el => {
-                el.removeEventListener('mouseenter', onMouseEnterInteractive);
-                el.removeEventListener('mouseleave', onMouseLeaveInteractive);
-                el.addEventListener('mouseenter', onMouseEnterInteractive);
-                el.addEventListener('mouseleave', onMouseLeaveInteractive);
-            });
-        };
+        const { attachListeners, observer } = useInteractiveListeners(cursor, follower);
 
         attachListeners();
-        const observer = new MutationObserver(attachListeners);
-        observer.observe(document.body, { childList: true, subtree: true });
 
         return () => {
-            document.removeEventListener('mousemove', onMouseMove);
             observer.disconnect();
         };
     }, []);
