@@ -4,15 +4,16 @@ import { useMousePosition, useInteractiveListeners } from '../utils/cursorUtils'
 export default function CustomCursor() {
     const cursorRef = useRef(null);
     const followerRef = useRef(null);
+    const { mouseX, mouseY } = useMousePosition();
 
     useEffect(() => {
         const cursor = cursorRef.current;
         const follower = followerRef.current;
         if (!cursor || !follower) return;
 
-        const { mouseX, mouseY } = useMousePosition();
         let cursorX = -100, cursorY = -100;
         let followerX = -100, followerY = -100;
+        let frameId;
 
         const animate = () => {
             cursorX += (mouseX.current - cursorX) * 0.25;
@@ -25,7 +26,7 @@ export default function CustomCursor() {
             follower.style.left = `${followerX}px`;
             follower.style.top = `${followerY}px`;
 
-            requestAnimationFrame(animate);
+            frameId = requestAnimationFrame(animate);
         };
 
         animate();
@@ -35,14 +36,15 @@ export default function CustomCursor() {
         attachListeners();
 
         return () => {
-            observer.disconnect();
+            observer?.disconnect?.();
+            if (frameId) cancelAnimationFrame(frameId);
         };
-    }, []);
+    }, [mouseX, mouseY]);
 
     if (typeof window !== 'undefined' && window.innerWidth < 768) return null;
 
     return (
-        <>
+        <> 
             <div ref={cursorRef} style={{
                 position: 'fixed',
                 width: '6px',
