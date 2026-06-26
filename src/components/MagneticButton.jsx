@@ -1,21 +1,16 @@
-import { useRef } from 'react';
+```
+import { useRef } from'react';
+import { applyTransform } from '../utils/transformUtils';
 
 export default function MagneticButton({ children, style = {}, onClick, className = '', id }) {
     const btnRef = useRef(null);
 
     const handleMouseMove = (e) => {
-        const btn = btnRef.current;
-        if (!btn) return;
-        const { left, top, width, height } = btn.getBoundingClientRect();
-        const x = e.clientX - left - width / 2;
-        const y = e.clientY - top - height / 2;
-        btn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+        applyTransform(btnRef, e, 0.25);
     };
 
     const handleMouseLeave = () => {
-        if (btnRef.current) {
-            btnRef.current.style.transform = 'translate(0, 0)';
-        }
+        applyTransform(btnRef, null, 0);
     };
 
     return (
@@ -36,3 +31,4 @@ export default function MagneticButton({ children, style = {}, onClick, classNam
         </button>
     );
 }
+```
