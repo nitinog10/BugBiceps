@@ -1,4 +1,6 @@
+```
 import { gsap } from 'gsap';
+import { getElementPosition } from '../shared/domUtils';
 
 export function handleSmoothScroll(event, targetSelector) {
   if (!targetSelector || typeof document === 'undefined') return;
@@ -7,7 +9,7 @@ export function handleSmoothScroll(event, targetSelector) {
   const target = document.querySelector(targetSelector);
   if (!target) return;
 
-  const targetY = target.getBoundingClientRect().top + window.scrollY;
+  const targetY = getElementPosition(target).top;
 
   gsap.to(window, {
     duration: 1,
@@ -15,3 +17,4 @@ export function handleSmoothScroll(event, targetSelector) {
     ease: 'power3.out',
   });
 }
+```

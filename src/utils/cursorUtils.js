@@ -1,4 +1,6 @@
-import { useEffect, useRef } from 'react';
+```javascript
+import { useEffect, useRef } from'react';
+import { getInteractiveTargets } from './domUtils';
 
 export function useMousePosition() {
   const mouseX = useRef(-100);
@@ -23,7 +25,7 @@ export function useInteractiveListeners(cursor, follower) {
   let observer;
 
   const attachListeners = () => {
-    const targets = document.querySelectorAll('a, button, .cursor-pointer');
+    const targets = getInteractiveTargets();
 
     targets.forEach((el) => {
       el.addEventListener('mouseenter', onEnter);
@@ -32,7 +34,7 @@ export function useInteractiveListeners(cursor, follower) {
   };
 
   const detachListeners = () => {
-    const targets = document.querySelectorAll('a, button, .cursor-pointer');
+    const targets = getInteractiveTargets();
 
     targets.forEach((el) => {
       el.removeEventListener('mouseenter', onEnter);
@@ -59,3 +61,12 @@ export function useInteractiveListeners(cursor, follower) {
 
   return { attachListeners, observer };
 }
+```
+
+```javascript
+// File: src/utils/domUtils.js
+
+export function getInteractiveTargets() {
+  return document.querySelectorAll('a, button, .cursor-pointer');
+}
+```
