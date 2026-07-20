@@ -22,7 +22,7 @@ export function useMousePosition() {
 }
 
 export function useInteractiveListeners(cursor, follower) {
-  let observer;
+  const observer = useRef(null);
 
   const attachListeners = () => {
     const targets = getInteractiveTargets();
@@ -52,14 +52,22 @@ export function useInteractiveListeners(cursor, follower) {
     if (follower) follower.style.transform = 'translate(-50%, -50%) scale(1)';
   };
 
-  observer = new MutationObserver(() => {
-    detachListeners();
-    attachListeners();
-  });
+  useEffect(() => {
+    observer.current = new MutationObserver(() => {
+      detachListeners();
+      attachListeners();
+    });
 
-  observer.observe(document.body, { childList: true, subtree: true });
+    observer.current.observe(document.body, { childList: true, subtree: true });
 
-  return { attachListeners, observer };
+    return () => {
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+    };
+  }, []);
+
+  return { attachListeners };
 }
 ```
 
