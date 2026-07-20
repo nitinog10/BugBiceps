@@ -1,4 +1,4 @@
-```
+```javascript
 import { gsap } from 'gsap';
 import { getElementPosition } from '../shared/domUtils';
 
@@ -16,5 +16,13 @@ export function handleSmoothScroll(event, targetSelector) {
     scrollTo: { y: targetY, autoKill: true },
     ease: 'power3.out',
   });
+}
+
+export function getElementPosition(element) {
+  const rect = element.getBoundingClientRect();
+  return {
+    top: rect.top + window.pageYOffset,
+    left: rect.left + window.pageXOffset
+  };
 }
 ```
