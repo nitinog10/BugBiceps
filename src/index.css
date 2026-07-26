@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Offset anchor targets so the sticky navbar never covers a heading. */
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-ink-900 font-sans text-ash-300 antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-optical-sizing: auto;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-ash-100;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background-color: rgba(245, 184, 28, 0.28);
+    color: #f4f6f8;
+  }
+
+  /* Keyboard focus only — never a ring on mouse clicks. */
+  :focus-visible {
+    outline: 2px solid rgba(245, 184, 28, 0.7);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0b0f12;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1d272e;
+    border-radius: 999px;
+    border: 2px solid #0b0f12;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2a3740;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+  }
+
+  /* Small uppercase technical label — section eyebrows, tags, chips. */
+  .eyebrow {
+    @apply font-sans text-[11px] font-medium uppercase tracking-eyebrow text-ember-400;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-md border border-white/[0.07] bg-white/[0.04] px-2.5 py-1
+           font-sans text-[11px] font-medium leading-none tracking-[0.01em] text-ash-300;
+  }
+
+  .surface {
+    @apply rounded-2xl border border-white/[0.08] bg-ink-700 shadow-card;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold
+           transition-all duration-300 focus-visible:outline-none;
+  }
+
+  .btn-primary {
+    @apply btn bg-ember text-ink-900 shadow-btn hover:brightness-110
+           hover:shadow-[0_10px_32px_-10px_rgba(242,106,33,0.85)];
+  }
+
+  .btn-ghost {
+    @apply btn border border-white/[0.12] bg-white/[0.02] text-ash-100 backdrop-blur-sm
+           hover:border-ember-400/40 hover:bg-white/[0.05];
+  }
+
+  /* Logo chip: logo.png has a baked #0F171A background, so it only blends
+     seamlessly on a surface of that exact colour. */
+  .logo-chip {
+    @apply overflow-hidden rounded-xl bg-ink-800 ring-1 ring-white/[0.08];
+  }
+
+  .gradient-text {
+    @apply bg-ember bg-clip-text text-transparent;
+  }
+
+  .field {
+    @apply w-full rounded-lg border border-white/[0.09] bg-ink-900 px-4 py-3 text-sm text-ash-100
+           placeholder:text-ash-500 transition-colors duration-200
+           focus:border-ember-400/50 focus:outline-none focus:ring-1 focus:ring-ember-400/25;
+  }
+
+  .field-label {
+    @apply mb-2 block font-sans text-[11px] font-medium uppercase tracking-eyebrow text-ash-500;
+  }
+}
+
+@layer utilities {
+  /* Fine film grain so the 1200px-wide hero art doesn't look cheap when upscaled. */
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .hairline-top {
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1) 20%,
+      rgba(255, 255, 255, 0.1) 80%,
+      transparent
+    );
+  }
+}

@@ -39,39 +39,28 @@
 - **Stack**: Blender, WebGL, Three.js, Figma, Adobe Suite
 - **Highlights**: 3D interactive product rendering, cinematic motion design, and visual brand identity systems.
 
----
-
-## 🎨 Design System & Aesthetics
-
-- **Primary Colors**:
-  - **Gold**: `#F0B020` / `--gold-light`: `#FFD54F` / `--gold-dark`: `#C48A10`
-  - **Orange**: `#F06020` / `--orange-light`: `#FF8040`
-  - **Red**: `#E83030` / `--red-light`: `#FF5252`
-- **Backgrounds**:
-  - **Primary Ambient**: `#060608`
-  - **Secondary Surface**: `#0A0A10`
-  - **Glassmorphism Panels**: `rgba(16, 16, 26, 0.75)` with `backdrop-filter: blur(20px)`
-- **Typography**:
-  - Headings: `Sora`, `Outfit`
-  - Body Text: `Inter`, `Plus Jakarta Sans`
-  - Monospace / Accents: `JetBrains Mono`
 
 ---
 
 ## 📁 Live Case Studies & Portfolio Projects
 
-1. **EntopLearning.com** (`EdTech · LMS`)
-   - Full-featured learning management system with course management, student dashboards, progress tracking, and interactive content delivery.
-   - *Tech*: React, Node.js, MongoDB, Firebase
+1)studiotreta.in an ecommerce website for clothing brand
 
-2. **Fizinga.in** (`E-Commerce · Health & Nutrition`)
+2. **Fizinga.com** (`E-Commerce · Health & Nutrition`)
    - E-commerce brand selling nutrition supplements and protein tablets with seamless checkout, product catalog, and order management.
    - *Tech*: Next.js, Tailwind CSS, Stripe, MongoDB
+
+3).Neodymiumaudio.in an ecommerce website for an audio supermarket and convenience store.
+
+4)logorhythms.in- An ai powered documentation for developers and a unified intelligence layer for companies and organization which connect their multiple tools into a single tool.
 
 3. **GuruParampara.in** (`Healthcare · Ayurvedic Events`)
    - Platform built for Ayurvedic doctors to manage events, workshops, and community engagement. Features event scheduling, registrations, and doctor profiles.
    - *Tech*: React, Node.js, MongoDB, Firebase
 
+ **EntopLearning.com** (`EdTech · LMS`)
+   - Full-featured learning management system with course management, student dashboards, progress tracking, and interactive content delivery.
+   - *Tech*: React, Node.js, MongoDB, Firebase
 4. **FinBot Pro** (`LLM · Financial AI`)
    - Fine-tuned financial advisor chatbot with RAG pipeline, real-time market analysis, and multi-modal document processing.
    - *Tech*: LangChain, GPT-4, Pinecone, Next.js
@@ -80,48 +69,6 @@
    - AI-powered weather prediction system delivering accurate forecasts using machine learning models and real-time atmospheric data.
    - *Tech*: PyTorch, FastAPI, React, PostgreSQL
 
----
-
-## ⚙️ Architecture & Folder Structure
-
-```
-├── README.md                  # Project introduction
-├── info.md                    # Detailed agency & system documentation
-├── index.html                 # Main HTML entry point
-├── package.json               # Node.js dependencies & scripts
-├── vite.config.js             # Vite build & asset configuration
-├── netlify.toml               # Netlify deployment settings
-├── public/                    # Static public assets
-│   ├── _headers               # Custom HTTP headers
-│   └── logo.png               # BugBiceps brand logo
-└── src/                       # Application source code
-    ├── App.jsx                # Root app & smooth scroll setup
-    ├── index.css              # Global design system & theme tokens
-    ├── main.jsx               # React DOM root mounting
-    ├── components/            # Reusable UI components
-    │   ├── CustomCursor.jsx   # Interactive custom cursor
-    │   ├── MagneticButton.jsx # Magnetic hover button component
-    │   ├── Navbar.jsx         # Sticky glassmorphic navigation
-    │   ├── Preloader.jsx      # Cinematic intro preloader
-    │   └── ScrollProgress.jsx # Top scroll indicator bar
-    ├── sections/              # Landing page sections
-    │   ├── Hero.jsx           # Hero spotlight & background
-    │   ├── Services.jsx       # Interactive services showcase
-    │   ├── AIShowcase.jsx     # AI & automation feature spotlight
-    │   ├── CaseStudies.jsx    # Live portfolio projects & modal
-    │   ├── Philosophy.jsx     # Engineering standards & principles
-    │   ├── Education.jsx      # Mission & leadership education
-    │   ├── Technologies.jsx   # Tech stack radar & matrix
-    │   ├── Testimonials.jsx   # Client reviews & star ratings
-    │   ├── Stats.jsx          # Key performance numbers
-    │   ├── Contact.jsx        # Project inquiry form & budget selector
-    │   └── Footer.jsx         # Agency footer & quick links
-    └── utils/                 # Modular utility functions
-        ├── domUtils.js        # Shared DOM helpers
-        ├── transformUtils.js  # Magnetic transform calculations
-        ├── cursorUtils.js     # Mouse tracking hooks
-        └── navigationUtils.js # Lenis & GSAP smooth scroll
-```
 
 ---
 
@@ -139,7 +86,3 @@ npm run build
 npm run preview
 ```
 
-### Deployment Configuration
-- **Platform**: Netlify
-- **Build Command**: `npm run build`
-- **Publish Directory**: `dist`
