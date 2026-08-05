@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, Phone, Linkedin, ChevronDown, Send, ArrowUpRight } from 'lucide-react';
+import { Mail, Linkedin, ChevronDown, Send, ArrowUpRight } from 'lucide-react';
 import { site } from '../data/site.js';
 import { services } from '../data/services.js';
 import SectionHeading from './SectionHeading.jsx';
@@ -103,19 +103,16 @@ export default function Contact() {
                 />
                 <ContactRow
                   icon={Mail}
+                  label="Secondary"
+                  value={site.secondaryEmail}
+                  href={`mailto:${site.secondaryEmail}`}
+                />
+                <ContactRow
+                  icon={Mail}
                   label="New Projects"
                   value={site.projectEmail}
                   href={`mailto:${site.projectEmail}`}
                 />
-                {site.phones.map((phone, i) => (
-                  <ContactRow
-                    key={phone.tel}
-                    icon={Phone}
-                    label={i === 0 ? 'Phone' : 'Alternate'}
-                    value={phone.display}
-                    href={`tel:${phone.tel}`}
-                  />
-                ))}
                 <ContactRow
                   icon={Linkedin}
                   label="LinkedIn"

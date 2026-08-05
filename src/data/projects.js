@@ -29,18 +29,18 @@ export const projects = [
     stack: ['React', 'Node.js', 'MongoDB'],
   },
   {
+    name: 'EntopLearning',
+    category: 'EdTech · LMS',
+    url: 'https://entoplearning.com',
+    description: 'Learning management system with course delivery, student dashboards and progress tracking.',
+    stack: ['React', 'Node.js', 'Dynamodb', 'Firebase'],
+  },
+  {
     name: 'GuruParampara',
     category: 'Healthcare · Ayurvedic Events',
     url: null,
     description: 'Event, workshop and community platform for Ayurvedic doctors, with registrations and profiles.',
     stack: ['React', 'Node.js', 'MongoDB', 'Firebase'],
-  },
-  {
-    name: 'EntopLearning',
-    category: 'EdTech · LMS',
-    url: null,
-    description: 'Learning management system with course delivery, student dashboards and progress tracking.',
-    stack: ['React', 'Node.js', 'Dynamodb', 'Firebase'],
   },
   {
     name: 'AtmoPredict',

@@ -51,10 +51,10 @@ export default function Footer() {
                 </li>
                 <li>
                   <a
-                    href={`tel:${site.phones[0].tel}`}
+                    href={`mailto:${site.secondaryEmail}`}
                     className="text-sm text-ash-300 transition-colors duration-200 hover:text-ash-100"
                   >
-                    {site.phones[0].display}
+                    {site.secondaryEmail}
                   </a>
                 </li>
                 <li className="pt-1">

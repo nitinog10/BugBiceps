@@ -6,11 +6,8 @@ export const site = {
   url: 'https://bugbiceps.in',
   status: 'Looking for clients across globe',
   primaryEmail: 'admin@bugbiceps.in',
+  secondaryEmail: 'bugbiceps@gmail.com',
   projectEmail: 'nitiniszod10@gmail.com',
-  phones: [
-    { display: '+91 74890 78947', tel: '+917489078947' },
-    { display: '+91 99819 79652', tel: '+919981979652' },
-  ],
   linkedin: 'https://www.linkedin.com/company/bugbiceps/',
 };
 
