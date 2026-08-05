@@ -103,15 +103,9 @@ export default function Contact() {
                 />
                 <ContactRow
                   icon={Mail}
-                  label="Secondary"
+                  label="Secondary / New Projects"
                   value={site.secondaryEmail}
                   href={`mailto:${site.secondaryEmail}`}
-                />
-                <ContactRow
-                  icon={Mail}
-                  label="New Projects"
-                  value={site.projectEmail}
-                  href={`mailto:${site.projectEmail}`}
                 />
                 <ContactRow
                   icon={Linkedin}

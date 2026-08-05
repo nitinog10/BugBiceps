@@ -7,7 +7,7 @@ export const site = {
   status: 'Looking for clients across globe',
   primaryEmail: 'admin@bugbiceps.in',
   secondaryEmail: 'bugbiceps@gmail.com',
-  projectEmail: 'nitiniszod10@gmail.com',
+  projectEmail: 'bugbiceps@gmail.com',
   linkedin: 'https://www.linkedin.com/company/bugbiceps/',
 };
 
