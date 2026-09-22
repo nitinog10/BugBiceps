@@ -49,3 +49,12 @@ Content is data-driven — edit the arrays in `src/data/` to change services, ca
 ---
 
 © 2026 BugBiceps. All Rights Reserved. · [bugbiceps.in](https://bugbiceps.in)
+
+## Code Improvements Applied
+
+- Added regression tests for highest-risk files:
+  - `nitinog10-BugBiceps-fafcb2f/src/components/Reveal.jsx`
+  - `nitinog10-BugBiceps-fafcb2f/src/data/site.js`
+  - `src/components/Reveal.jsx`
+- Proposed extracting shared utility code into a dedicated module to reduce coupling.
+- Updated documentation by re-indexing and regenerating walkthroughs/diagrams.
