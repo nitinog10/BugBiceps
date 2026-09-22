@@ -1,3 +1,6 @@
+```javascript
+import { encodeURIComponent } from 'utils/url';
+
 export const site = {
   name: 'Bugbiceps',
   tagline: 'Code Crafted Like Fine Art',
@@ -21,3 +24,4 @@ export const navLinks = [
   { label: 'Process', href: '#process' },
   { label: 'Contact', href: '#contact' },
 ];
+```
