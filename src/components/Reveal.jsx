@@ -1,6 +1,6 @@
+```jsx
 import { motion, useReducedMotion } from 'framer-motion';
-
-const EASE = [0.22, 1, 0.36, 1];
+import { EASE, MotionTag } from '../utils/motion';
 
 /**
  * Scroll-triggered fade + rise. Collapses to a plain fade when the visitor
@@ -8,10 +8,10 @@ const EASE = [0.22, 1, 0.36, 1];
  */
 export default function Reveal({ children, delay = 0, y = 16, className = '', as = 'div' }) {
   const reduceMotion = useReducedMotion();
-  const MotionTag = motion[as] ?? motion.div;
 
   return (
     <MotionTag
+      as={as}
       className={className}
       initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -22,3 +22,15 @@ export default function Reveal({ children, delay = 0, y = 16, className = '', as
     </MotionTag>
   );
 }
+```
+
+```js
+// File: src/utils/motion.js
+
+export const EASE = [0.22, 1, 0.36, 1];
+
+export const MotionTag = ({ as = 'div',...props }) => {
+  const Tag = motion[as]?? motion.div;
+  return <Tag {...props} />;
+};
+```
